@@ -1,0 +1,10 @@
+{
+  "name": "FieldMind AI",
+  "description": "AI copilot for field technicians providing contextual equipment diagnosis, error resolution, safety step-by-step guidance, and automatic service report generation.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
