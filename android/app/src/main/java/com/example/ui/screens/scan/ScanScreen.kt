@@ -51,6 +51,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -63,7 +64,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -140,6 +141,14 @@ fun ScanScreen(
 
     val imageCapture = remember { ImageCapture.Builder().build() }
     val cameraExecutor = remember { Executors.newSingleThreadExecutor() }
+
+    DisposableEffect(lifecycleOwner) {
+        onDispose {
+            try {
+                cameraExecutor.shutdown()
+            } catch (_: Exception) {}
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -241,10 +250,12 @@ fun ScanScreen(
                         )
                     }
                 } else if (hasCameraPermission) {
-                    // Live CameraX Preview
+                    // Live CameraX Preview (COMPATIBLE mode uses TextureView to prevent SurfaceView BufferQueue abandonment)
                     AndroidView(
                         factory = { ctx ->
                             val previewView = PreviewView(ctx).apply {
+                                implementationMode = PreviewView.ImplementationMode.COMPATIBLE
+                                scaleType = PreviewView.ScaleType.FILL_CENTER
                                 layoutParams = ViewGroup.LayoutParams(
                                     ViewGroup.LayoutParams.MATCH_PARENT,
                                     ViewGroup.LayoutParams.MATCH_PARENT
@@ -270,6 +281,12 @@ fun ScanScreen(
                                 }
                             }, ContextCompat.getMainExecutor(ctx))
                             previewView
+                        },
+                        onRelease = { view ->
+                            try {
+                                val cameraProvider = ProcessCameraProvider.getInstance(view.context).get()
+                                cameraProvider.unbindAll()
+                            } catch (_: Exception) {}
                         },
                         modifier = Modifier.fillMaxSize()
                     )

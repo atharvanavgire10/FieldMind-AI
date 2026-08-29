@@ -1,15 +1,13 @@
 import React from 'react';
 import { ViewMode } from '../types';
+import { FieldMindMark, FieldMindWordmark } from './BrandMark';
 import {
-  Wrench,
-  Sparkles,
-  ShieldCheck,
-  BookOpen,
+  Stethoscope,
   LayoutDashboard,
-  Zap,
+  ScanLine,
   RotateCcw,
   Smartphone,
-  CheckCircle2,
+  Layers,
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -30,168 +28,160 @@ export const Navbar: React.FC<NavbarProps> = ({
   isAiConnected = true,
 }) => {
   const triggerDemo = onStartDiagnosis || onStartDemo;
+  const isDiagnosis = currentView === 'diagnose' || (currentView as string) === 'diagnosis';
+
+  const linkClass = (active: boolean) =>
+    [
+      'flex items-center gap-1.5 rounded-plate px-3 py-2 text-xs font-semibold tracking-wide transition',
+      active
+        ? 'bg-chassis-700 text-deck-50 ring-1 ring-chassis-500/70'
+        : 'text-deck-50/60 hover:bg-chassis-800 hover:text-deck-50',
+    ].join(' ');
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md shadow-xs">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-40 w-full border-b border-chassis-700 bg-chassis-900 no-print">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         {/* Brand */}
-        <div className="flex items-center gap-3">
-          <button
-            id="nav-logo-btn"
-            onClick={() => onNavigate('landing')}
-            className="flex items-center gap-2.5 text-left transition hover:opacity-90 focus:outline-none"
-          >
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-600 shadow-sm shadow-blue-500/20 text-white">
-              <Wrench className="h-5 w-5" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-lg font-extrabold tracking-tight text-slate-900">
-                  Field<span className="text-blue-600">Mind</span> <span className="text-cyan-600">AI</span>
-                </span>
-                <span className="hidden rounded-md bg-blue-50 px-2 py-0.5 text-[11px] font-semibold text-blue-700 border border-blue-200 sm:inline-block">
-                  Field Copilot MVP
-                </span>
-              </div>
-              <p className="hidden text-[11px] text-slate-500 font-medium sm:block">AI-Powered Field Technician Assistant</p>
-            </div>
-          </button>
-        </div>
+        <button
+          id="nav-logo-btn"
+          onClick={() => onNavigate('landing')}
+          className="flex shrink-0 items-center gap-2.5 text-left transition hover:opacity-90"
+        >
+          <span className="flex h-9 w-9 items-center justify-center rounded-plate bg-chassis-800 text-deck-50 ring-1 ring-chassis-600">
+            <FieldMindMark size={21} />
+          </span>
+          <span className="hidden sm:block">
+            <FieldMindWordmark tone="onDark" className="text-lg" />
+            <span className="mt-0.5 block text-[11px] font-medium text-deck-50/45">
+              An AI expert in every field worker&rsquo;s pocket
+            </span>
+          </span>
+          <span className="sm:hidden">
+            <FieldMindWordmark tone="onDark" className="text-base" />
+          </span>
+        </button>
 
         {/* View Nav Links */}
-        <nav className="hidden items-center gap-1.5 md:flex">
+        <nav className="hidden items-center gap-1 md:flex">
           <button
             id="nav-landing-btn"
             onClick={() => onNavigate('landing')}
-            className={`rounded-lg px-3.5 py-2 text-xs font-semibold transition ${
-              currentView === 'landing'
-                ? 'bg-slate-100 text-blue-700 shadow-xs'
-                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-            }`}
+            className={linkClass(currentView === 'landing')}
           >
-            Product Overview
+            Overview
           </button>
 
           <button
             id="nav-tech-btn"
             onClick={() => onNavigate('technician')}
-            className={`flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-xs font-semibold transition ${
-              currentView === 'technician'
-                ? 'bg-blue-50 text-blue-700 border border-blue-200/80 shadow-xs'
-                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-            }`}
+            className={linkClass(currentView === 'technician')}
           >
-            <Smartphone className="h-4 w-4 text-slate-500" />
+            <Smartphone className="h-4 w-4 opacity-70" />
             Technician App
           </button>
 
           <button
             id="nav-diag-btn"
             onClick={() => onNavigate('diagnosis' as any)}
-            className={`flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-xs font-semibold transition ${
-              currentView === 'diagnose' || (currentView as string) === 'diagnosis'
-                ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/25'
-                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-            }`}
+            className={linkClass(isDiagnosis)}
           >
-            <Sparkles className={`h-4 w-4 ${currentView === 'diagnose' || (currentView as string) === 'diagnosis' ? 'text-white' : 'text-blue-600'}`} />
-            AI Diagnosis Flow
+            <Stethoscope className={`h-4 w-4 ${isDiagnosis ? 'text-signal-500' : 'opacity-70'}`} />
+            Diagnosis
           </button>
 
           <button
             id="nav-supervisor-btn"
             onClick={() => onNavigate('supervisor')}
-            className={`flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-xs font-semibold transition ${
-              currentView === 'supervisor'
-                ? 'bg-blue-50 text-blue-700 border border-blue-200/80 shadow-xs'
-                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-            }`}
+            className={linkClass(currentView === 'supervisor')}
           >
-            <LayoutDashboard className="h-4 w-4 text-slate-500" />
+            <LayoutDashboard className="h-4 w-4 opacity-70" />
             Supervisor Hub
           </button>
         </nav>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-2.5">
-          {/* AI Status Badge */}
+        <div className="flex shrink-0 items-center gap-2">
+          {/* Diagnostic engine status */}
           <div
-            className="hidden items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] text-slate-700 lg:flex"
-            title="Gemini AI Server-Side Engine Status"
+            className="hidden items-center gap-2 rounded-plate border border-chassis-600 bg-chassis-800 px-2.5 py-1.5 lg:flex"
+            title="FieldMind diagnostic engine status"
           >
             <span
-              className={`h-2 w-2 rounded-full ${
-                isAiConnected ? 'bg-emerald-500 animate-pulse' : 'bg-emerald-600'
+              className={`h-1.5 w-1.5 rounded-full ${
+                isAiConnected ? 'bg-verified-500' : 'bg-signal-500'
               }`}
             />
-            <span className="font-mono text-[11px] font-semibold text-slate-600">Gemini 3.7 Engine</span>
+            <span className="fm-label text-deck-50/60">
+              {isAiConnected ? 'Engine online' : 'Engine offline'}
+            </span>
           </div>
 
-          {/* Reset Demo Data if handler given */}
+          {/* Restore sample data if handler given */}
           {onResetDemo && (
             <button
               id="nav-reset-demo-btn"
               onClick={onResetDemo}
-              title="Reset test jobs & reports to default state"
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 shadow-xs transition hover:bg-slate-50 hover:text-slate-800"
+              title="Restore sample jobs and reports to their initial state"
+              aria-label="Restore sample data"
+              className="flex h-9 w-9 items-center justify-center rounded-plate border border-chassis-600 bg-chassis-800 text-deck-50/60 transition hover:border-chassis-500 hover:text-deck-50"
             >
               <RotateCcw className="h-4 w-4" />
             </button>
           )}
 
-          {/* 1-Click Judge Demo CTA */}
+          {/* Primary CTA */}
           {triggerDemo && (
             <button
               id="nav-start-demo-btn"
               onClick={triggerDemo}
-              className="flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-sm shadow-blue-500/30 transition hover:bg-blue-700 active:scale-95"
+              className="flex items-center gap-1.5 rounded-plate bg-signal-500 px-3.5 py-2.5 text-xs font-bold tracking-wide text-chassis-950 transition hover:bg-signal-400 active:translate-y-px"
             >
-              <Zap className="h-3.5 w-3.5 fill-white text-white" />
-              <span>Launch Demo</span>
+              <ScanLine className="h-4 w-4" />
+              <span>Start Diagnosis</span>
             </button>
           )}
         </div>
       </div>
 
       {/* Mobile view bar */}
-      <div className="flex items-center justify-around border-t border-slate-200 bg-white px-2 py-2 md:hidden">
+      <div className="flex items-stretch justify-around border-t border-chassis-700 bg-chassis-950 px-2 py-1.5 md:hidden">
         <button
           onClick={() => onNavigate('landing')}
-          className={`flex flex-col items-center text-[10px] font-semibold ${
-            currentView === 'landing' ? 'text-blue-600' : 'text-slate-500'
+          className={`flex flex-1 flex-col items-center gap-0.5 rounded-plate py-1.5 text-[10px] font-semibold tracking-wide ${
+            currentView === 'landing' ? 'bg-chassis-800 text-signal-500' : 'text-deck-50/55'
           }`}
         >
+          <Layers className="h-4 w-4" />
           <span>Overview</span>
         </button>
         <button
           onClick={() => onNavigate('technician')}
-          className={`flex flex-col items-center text-[10px] font-semibold ${
-            currentView === 'technician' ? 'text-blue-600' : 'text-slate-500'
+          className={`flex flex-1 flex-col items-center gap-0.5 rounded-plate py-1.5 text-[10px] font-semibold tracking-wide ${
+            currentView === 'technician' ? 'bg-chassis-800 text-signal-500' : 'text-deck-50/55'
           }`}
         >
-          <Smartphone className="h-4 w-4 mb-0.5" />
-          <span>Tech App</span>
+          <Smartphone className="h-4 w-4" />
+          <span>Jobs</span>
         </button>
         <button
           onClick={() => onNavigate('diagnose' as any)}
-          className={`flex flex-col items-center text-[10px] font-semibold ${
-            currentView === 'diagnose' || (currentView as string) === 'diagnosis' ? 'text-blue-600' : 'text-slate-500'
+          className={`flex flex-1 flex-col items-center gap-0.5 rounded-plate py-1.5 text-[10px] font-semibold tracking-wide ${
+            isDiagnosis ? 'bg-chassis-800 text-signal-500' : 'text-deck-50/55'
           }`}
         >
-          <Sparkles className="h-4 w-4 mb-0.5 text-blue-600" />
-          <span>AI Diagnose</span>
+          <Stethoscope className="h-4 w-4" />
+          <span>Diagnose</span>
         </button>
         <button
           onClick={() => onNavigate('supervisor')}
-          className={`flex flex-col items-center text-[10px] font-semibold ${
-            currentView === 'supervisor' ? 'text-blue-600' : 'text-slate-500'
+          className={`flex flex-1 flex-col items-center gap-0.5 rounded-plate py-1.5 text-[10px] font-semibold tracking-wide ${
+            currentView === 'supervisor' ? 'bg-chassis-800 text-signal-500' : 'text-deck-50/55'
           }`}
         >
-          <LayoutDashboard className="h-4 w-4 mb-0.5" />
+          <LayoutDashboard className="h-4 w-4" />
           <span>Supervisor</span>
         </button>
       </div>
     </header>
   );
 };
-

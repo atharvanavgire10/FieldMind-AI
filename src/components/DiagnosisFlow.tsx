@@ -9,7 +9,8 @@ import {
 import {
   Camera,
   Upload,
-  Sparkles,
+  ScanLine,
+  Stethoscope,
   AlertTriangle,
   ShieldCheck,
   CheckCircle2,
@@ -22,10 +23,9 @@ import {
   Download,
   Save,
   MessageSquare,
-  Bot,
-  Zap,
   Check,
 } from 'lucide-react';
+import { FieldMindMark } from './BrandMark';
 import { DEMO_SAMPLE_PHOTOS } from '../data/knowledgeBase';
 
 interface DiagnosisFlowProps {
@@ -282,15 +282,16 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#F1F5F9] px-4 py-8 sm:px-6 lg:px-8 text-slate-800">
+    <div className="min-h-screen bg-deck-100 px-4 py-8 sm:px-6 lg:px-8 text-ink-800">
       <div className="mx-auto max-w-5xl space-y-6">
         {/* Step Progress Tracker */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-xs">
+        <div className="rounded-panel border border-deck-300 bg-deck-50 p-4 sm:p-5 shadow-xs">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-blue-700">
-              Interactive AI Diagnostic Workflow
+            <span className="flex items-center gap-2.5 text-xs font-mono font-bold uppercase tracking-wider text-ink-700">
+              <span className="h-3 w-[2px] bg-signal-500" aria-hidden="true" />
+              Guided Diagnostic Procedure
             </span>
-            <span className="text-xs text-slate-500 font-semibold">
+            <span className="text-xs text-ink-500 font-semibold">
               Step {currentStep} of 6
             </span>
           </div>
@@ -298,12 +299,12 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
           {/* Stepper Dots & Labels */}
           <div className="grid grid-cols-6 gap-2">
             {[
-              { num: 1, label: '1. Scan Photo' },
-              { num: 2, label: '2. Select Code' },
-              { num: 3, label: '3. AI Analysis' },
-              { num: 4, label: '4. Guided Fix' },
-              { num: 5, label: '5. Complete' },
-              { num: 6, label: '6. Report' },
+              { num: 1, label: 'Capture' },
+              { num: 2, label: 'Analyze' },
+              { num: 3, label: 'Understand' },
+              { num: 4, label: 'Guide' },
+              { num: 5, label: 'Complete' },
+              { num: 6, label: 'Report' },
             ].map((step) => {
               const isPassed = currentStep > step.num;
               const isCurrent = currentStep === step.num;
@@ -316,21 +317,21 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
                       setCurrentStep(step.num);
                     }
                   }}
-                  className={`flex flex-col items-center gap-1 rounded-xl py-2 px-1 text-center transition cursor-pointer ${
+                  className={`flex flex-col items-center gap-1 rounded-panel py-2 px-1 text-center transition cursor-pointer ${
                     isCurrent
-                      ? 'bg-blue-50 border border-blue-300 text-blue-700 font-bold shadow-xs'
+                      ? 'bg-signal-100 border border-signal-600/40 text-signal-700 font-bold shadow-xs'
                       : isPassed
-                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 font-medium'
-                      : 'bg-slate-50 text-slate-400 border border-slate-200'
+                      ? 'bg-verified-100 text-verified-700 border border-verified-600/30 font-medium'
+                      : 'bg-deck-100 text-ink-400 border border-deck-300'
                   }`}
                 >
                   <div
                     className={`flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold ${
                       isCurrent
-                        ? 'bg-blue-600 text-white'
+                        ? 'bg-chassis-900 text-white'
                         : isPassed
-                        ? 'bg-emerald-600 text-white'
-                        : 'bg-slate-200 text-slate-500'
+                        ? 'bg-verified-600 text-white'
+                        : 'bg-deck-300 text-ink-500'
                     }`}
                   >
                     {isPassed ? '✓' : step.num}
@@ -346,24 +347,24 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
 
         {/* STEP 1: SELECT OR UPLOAD EQUIPMENT IMAGE */}
         {currentStep === 1 && (
-          <div className="space-y-6 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs">
+          <div className="space-y-6 rounded-panel border border-deck-300 bg-deck-50 p-6 sm:p-8 shadow-xs">
             <div>
-              <div className="flex items-center gap-2 text-blue-700 text-xs font-mono uppercase font-bold">
+              <div className="flex items-center gap-2 text-signal-700 text-xs font-mono uppercase font-bold">
                 <Camera className="h-4 w-4" />
-                <span>Step 1: Visual Capture & Optical Input</span>
+                <span>Step 1 &mdash; Capture</span>
               </div>
-              <h2 className="mt-1 text-xl sm:text-2xl font-bold text-slate-900">
+              <h2 className="mt-1 text-xl sm:text-2xl font-bold text-ink-900">
                 Select or Upload Equipment Photo
               </h2>
-              <p className="mt-1 text-xs sm:text-sm text-slate-600">
+              <p className="mt-1 text-xs sm:text-sm text-ink-500">
                 Capture the control panel alarm display, equipment serial plate, or mechanical issue using your phone camera.
               </p>
             </div>
 
             {/* Realistic Pre-loaded Test Photos */}
             <div>
-              <label className="text-xs font-bold text-slate-700 uppercase tracking-wide">
-                Simulated Hackathon Test Images (or Upload Custom)
+              <label className="text-xs font-bold text-ink-700 uppercase tracking-wide">
+                Sample equipment photos &mdash; or upload your own
               </label>
               <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {DEMO_SAMPLE_PHOTOS.map((photo) => {
@@ -377,10 +378,10 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
                         setSelectedErrorCode(photo.errorCode);
                         setIsCustomUpload(false);
                       }}
-                      className={`group relative overflow-hidden rounded-xl border text-left transition cursor-pointer shadow-xs ${
+                      className={`group relative overflow-hidden rounded-panel border text-left transition cursor-pointer shadow-xs ${
                         isSelected
-                          ? 'border-blue-600 ring-2 ring-blue-500/30 bg-blue-50/40'
-                          : 'border-slate-200 bg-white hover:border-slate-300'
+                          ? 'border-signal-500 ring-2 ring-signal-500/30 bg-signal-100/40'
+                          : 'border-deck-300 bg-deck-50 hover:border-deck-300'
                       }`}
                     >
                       <img
@@ -390,19 +391,19 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
                       />
                       <div className="p-3">
                         <div className="flex items-center justify-between">
-                          <span className="rounded-md bg-red-50 border border-red-200 px-1.5 py-0.5 font-mono text-[10px] font-bold text-red-700">
+                          <span className="rounded-plate bg-alarm-100 border border-alarm-600/30 px-1.5 py-0.5 font-mono text-[10px] font-bold text-alarm-700">
                             Alarm: {photo.errorCode}
                           </span>
                           {isSelected && (
-                            <span className="flex h-4 w-4 items-center justify-center rounded-full bg-blue-600 text-white text-[10px] font-bold">
+                            <span className="flex h-4 w-4 items-center justify-center rounded-full bg-chassis-900 text-white text-[10px] font-bold">
                               ✓
                             </span>
                           )}
                         </div>
-                        <h4 className="mt-1.5 text-xs font-bold text-slate-900 line-clamp-1">
+                        <h4 className="mt-1.5 text-xs font-bold text-ink-900 line-clamp-1">
                           {photo.title}
                         </h4>
-                        <p className="mt-0.5 text-[10px] text-slate-500 line-clamp-2">
+                        <p className="mt-0.5 text-[10px] text-ink-500 line-clamp-2">
                           {photo.description}
                         </p>
                       </div>
@@ -413,15 +414,15 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
             </div>
 
             {/* Custom Upload Dropzone */}
-            <div className="rounded-xl border border-dashed border-slate-300 bg-[#F8FAFC] p-6 text-center">
-              <Upload className="mx-auto h-8 w-8 text-slate-400" />
-              <div className="mt-2 text-xs font-bold text-slate-800">
+            <div className="rounded-panel border border-dashed border-deck-300 bg-deck-100 p-6 text-center">
+              <Upload className="mx-auto h-8 w-8 text-ink-400" />
+              <div className="mt-2 text-xs font-bold text-ink-800">
                 Upload custom equipment photo or camera snapshot
               </div>
-              <p className="text-[11px] text-slate-500 mt-0.5">
+              <p className="text-[11px] text-ink-500 mt-0.5">
                 Supports PNG, JPG, WEBP from mobile camera capture
               </p>
-              <label className="mt-3 inline-flex items-center gap-2 rounded-xl bg-white border border-slate-300 px-4 py-2 text-xs font-semibold text-slate-700 cursor-pointer hover:bg-slate-50 shadow-xs">
+              <label className="mt-3 inline-flex items-center gap-2 rounded-panel bg-deck-50 border border-deck-300 px-4 py-2 text-xs font-semibold text-ink-700 cursor-pointer hover:bg-deck-100 shadow-xs">
                 <span>Browse / Take Photo</span>
                 <input
                   type="file"
@@ -433,11 +434,11 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
             </div>
 
             {/* Navigation Button */}
-            <div className="flex justify-end pt-4 border-t border-slate-200">
+            <div className="flex justify-end pt-4 border-t border-deck-300">
               <button
                 id="diag-step1-next-btn"
                 onClick={() => setCurrentStep(2)}
-                className="flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-xs font-bold text-white shadow-md shadow-blue-600/20 transition hover:bg-blue-700 cursor-pointer"
+                className="flex items-center gap-2 rounded-panel bg-chassis-900 px-6 py-3 text-xs font-bold text-white shadow-md shadow-chassis-900/20 transition hover:bg-chassis-800 cursor-pointer"
               >
                 <span>Continue to Equipment & Error Code</span>
                 <ArrowRight className="h-4 w-4" />
@@ -448,31 +449,31 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
 
         {/* STEP 2: SELECT EQUIPMENT & ERROR CODE */}
         {currentStep === 2 && (
-          <div className="space-y-6 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs">
+          <div className="space-y-6 rounded-panel border border-deck-300 bg-deck-50 p-6 sm:p-8 shadow-xs">
             <div>
-              <div className="flex items-center gap-2 text-blue-700 text-xs font-mono uppercase font-bold">
+              <div className="flex items-center gap-2 text-signal-700 text-xs font-mono uppercase font-bold">
                 <Wrench className="h-4 w-4" />
-                <span>Step 2: Model & Alarm Selection</span>
+                <span>Step 2 &mdash; Analyze</span>
               </div>
-              <h2 className="mt-1 text-xl sm:text-2xl font-bold text-slate-900">
-                Select Simulated Equipment Type & Error Code
+              <h2 className="mt-1 text-xl sm:text-2xl font-bold text-ink-900">
+                Confirm the Equipment and the Fault Code
               </h2>
-              <p className="mt-1 text-xs sm:text-sm text-slate-600">
-                For reliable MVP demonstration, select the target equipment and reported alarm code from the simulated knowledge base.
+              <p className="mt-1 text-xs sm:text-sm text-ink-500">
+                FieldMind reads the fault against the manual for this exact model, so the equipment and reported alarm code need to be right before analysis runs.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Equipment Selector */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2">
+                <label className="block text-xs font-bold text-ink-700 uppercase tracking-wide mb-2">
                   Target Equipment
                 </label>
                 <select
                   id="diag-equipment-select"
                   value={selectedEquipmentId}
                   onChange={(e) => setSelectedEquipmentId(e.target.value)}
-                  className="w-full rounded-xl border border-slate-300 bg-white p-3 text-sm text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none shadow-xs"
+                  className="w-full rounded-panel border border-deck-300 bg-deck-50 p-3 text-sm text-ink-900 focus:border-signal-500 focus:ring-1 focus:ring-signal-500 focus:outline-none shadow-xs"
                 >
                   {equipmentList.map((eq) => (
                     <option key={eq.id} value={eq.id}>
@@ -482,15 +483,15 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
                 </select>
 
                 {/* Selected Equipment Snapshot */}
-                <div className="mt-3 rounded-xl border border-slate-200 bg-[#F8FAFC] p-3.5 space-y-2 text-xs">
-                  <div className="font-bold text-slate-900">{selectedEquipment.name}</div>
-                  <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-600">
-                    <div>Capacity: <span className="text-slate-900 font-semibold">{selectedEquipment.tonnage}</span></div>
-                    <div>Voltage: <span className="text-slate-900 font-semibold">{selectedEquipment.voltage}</span></div>
-                    <div>Refrigerant: <span className="text-slate-900 font-semibold">{selectedEquipment.refrigerant}</span></div>
-                    <div>Location: <span className="text-slate-900 font-semibold">{selectedEquipment.location}</span></div>
+                <div className="mt-3 rounded-panel border border-deck-300 bg-deck-100 p-3.5 space-y-2 text-xs">
+                  <div className="font-bold text-ink-900">{selectedEquipment.name}</div>
+                  <div className="grid grid-cols-2 gap-2 text-[11px] text-ink-500">
+                    <div>Capacity: <span className="text-ink-900 font-semibold">{selectedEquipment.tonnage}</span></div>
+                    <div>Voltage: <span className="text-ink-900 font-semibold">{selectedEquipment.voltage}</span></div>
+                    <div>Refrigerant: <span className="text-ink-900 font-semibold">{selectedEquipment.refrigerant}</span></div>
+                    <div>Location: <span className="text-ink-900 font-semibold">{selectedEquipment.location}</span></div>
                   </div>
-                  <div className="border-t border-slate-200 pt-2 text-[10px] text-blue-700 font-semibold flex items-center gap-1">
+                  <div className="border-t border-deck-300 pt-2 text-[10px] text-signal-700 font-semibold flex items-center gap-1">
                     <BookOpen className="h-3 w-3" />
                     <span>OEM Manual: {selectedEquipment.manualTitle}</span>
                   </div>
@@ -499,14 +500,14 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
 
               {/* Error Code Selector */}
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2">
+                <label className="block text-xs font-bold text-ink-700 uppercase tracking-wide mb-2">
                   Reported Error Code
                 </label>
                 <select
                   id="diag-error-select"
                   value={selectedErrorCode}
                   onChange={(e) => setSelectedErrorCode(e.target.value)}
-                  className="w-full rounded-xl border border-slate-300 bg-white p-3 text-sm text-slate-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none shadow-xs"
+                  className="w-full rounded-panel border border-deck-300 bg-deck-50 p-3 text-sm text-ink-900 focus:border-signal-500 focus:ring-1 focus:ring-signal-500 focus:outline-none shadow-xs"
                 >
                   {errorCodes.map((err) => (
                     <option key={err.code} value={err.code}>
@@ -516,16 +517,16 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
                 </select>
 
                 {/* Selected Error Snapshot */}
-                <div className="mt-3 rounded-xl border border-slate-200 bg-[#F8FAFC] p-3.5 space-y-2 text-xs">
+                <div className="mt-3 rounded-panel border border-deck-300 bg-deck-100 p-3.5 space-y-2 text-xs">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-red-700">Alarm {selectedError.code}: {selectedError.title}</span>
-                    <span className="rounded-md bg-red-50 border border-red-200 px-1.5 py-0.5 text-[10px] font-bold text-red-700 uppercase">
+                    <span className="font-bold text-alarm-700">Alarm {selectedError.code}: {selectedError.title}</span>
+                    <span className="rounded-plate bg-alarm-100 border border-alarm-600/30 px-1.5 py-0.5 text-[10px] font-bold text-alarm-700 uppercase">
                       {selectedError.severity}
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-600">{selectedError.likelyCause}</p>
-                  <div className="rounded-lg bg-amber-50 border border-amber-200 p-2 text-[10px] text-amber-800 flex items-start gap-1.5 font-medium">
-                    <AlertTriangle className="h-3.5 w-3.5 shrink-0 mt-0.5 text-amber-600" />
+                  <p className="text-[11px] text-ink-500">{selectedError.likelyCause}</p>
+                  <div className="rounded-plate bg-signal-100 border border-signal-600/30 p-2 text-[10px] text-signal-700 flex items-start gap-1.5 font-medium">
+                    <AlertTriangle className="h-3.5 w-3.5 shrink-0 mt-0.5 text-signal-700" />
                     <span>{selectedError.safetyWarning}</span>
                   </div>
                 </div>
@@ -534,23 +535,23 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
 
             {/* Field Notes Input */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2">
-                Technician On-Site Observations (Optional Prompt Context)
+              <label className="block text-xs font-bold text-ink-700 uppercase tracking-wide mb-2">
+                Technician On-Site Observations (Optional)
               </label>
               <textarea
                 rows={2}
                 value={technicianFieldNotes}
                 onChange={(e) => setTechnicianFieldNotes(e.target.value)}
-                className="w-full rounded-xl border border-slate-300 bg-white p-3 text-xs text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none shadow-xs"
+                className="w-full rounded-panel border border-deck-300 bg-deck-50 p-3 text-xs text-ink-900 placeholder-ink-400 focus:border-signal-500 focus:ring-1 focus:ring-signal-500 focus:outline-none shadow-xs"
                 placeholder="e.g. Compressor casing hot to touch, fan running at half speed, visual dust on return grilles..."
               />
             </div>
 
             {/* Navigation Buttons */}
-            <div className="flex items-center justify-between pt-4 border-t border-slate-200">
+            <div className="flex items-center justify-between pt-4 border-t border-deck-300">
               <button
                 onClick={() => setCurrentStep(1)}
-                className="flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer shadow-xs"
+                className="flex items-center gap-1.5 rounded-panel border border-deck-300 bg-deck-50 px-4 py-2.5 text-xs font-semibold text-ink-700 hover:bg-deck-100 cursor-pointer shadow-xs"
               >
                 <ArrowLeft className="h-4 w-4" />
                 <span>Back</span>
@@ -560,17 +561,17 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
                 id="diag-step2-run-btn"
                 onClick={handleRunDiagnosis}
                 disabled={isDiagnosing}
-                className="flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-xs font-bold text-white shadow-md shadow-blue-600/20 transition hover:bg-blue-700 disabled:opacity-60 cursor-pointer"
+                className="flex items-center gap-2 rounded-panel bg-signal-500 px-6 py-3 text-xs font-bold text-chassis-950 shadow-md shadow-chassis-900/20 transition hover:bg-signal-400 disabled:opacity-60 cursor-pointer active:translate-y-px"
               >
                 {isDiagnosing ? (
                   <>
-                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                    <span>Gemini AI Analyzing Telemetry & Manuals...</span>
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-chassis-950 border-t-transparent" />
+                    <span>Reading the fault against the manual&hellip;</span>
                   </>
                 ) : (
                   <>
-                    <Sparkles className="h-4 w-4 text-blue-200" />
-                    <span>Run AI Diagnosis Engine</span>
+                    <ScanLine className="h-4 w-4" />
+                    <span>Analyze with FieldMind</span>
                     <ArrowRight className="h-4 w-4" />
                   </>
                 )}
@@ -581,19 +582,19 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
 
         {/* STEP 3: SHOW AI ANALYSIS */}
         {currentStep === 3 && diagnosticResult && (
-          <div className="space-y-6 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs">
+          <div className="space-y-6 rounded-panel border border-deck-300 bg-deck-50 p-6 sm:p-8 shadow-xs">
             {/* Insufficient Information Banner if Detected */}
             {diagnosticResult.isInsufficientInfo && (
-              <div className="rounded-xl border border-amber-300 bg-amber-50 p-4 sm:p-5 text-amber-900">
+              <div className="rounded-panel border border-signal-600/40 bg-signal-100 p-4 sm:p-5 text-signal-700">
                 <div className="flex items-start gap-3">
-                  <AlertTriangle className="h-6 w-6 text-amber-600 shrink-0 mt-0.5" />
+                  <AlertTriangle className="h-6 w-6 text-signal-700 shrink-0 mt-0.5" />
                   <div>
-                    <h3 className="text-sm font-bold text-amber-950 uppercase tracking-wide">
+                    <h3 className="text-sm font-bold text-signal-700 uppercase tracking-wide">
                       Safety Alert: Insufficient Diagnostic Information
                     </h3>
-                    <p className="mt-1 text-xs text-amber-900 leading-relaxed">
+                    <p className="mt-1 text-xs text-signal-700 leading-relaxed">
                       {diagnosticResult.insufficientInfoNotice ||
-                        'The supplied equipment parameters or error code were not found in the verified simulated OEM knowledge base. FieldMind AI prioritizes technician safety and will not invent equipment specifications or unsafe repair procedures.'}
+                        'The supplied equipment parameters or error code were not found in the verified OEM knowledge base. FieldMind prioritizes technician safety and will not invent equipment specifications or unsafe repair procedures.'}
                     </p>
                   </div>
                 </div>
@@ -601,28 +602,28 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
             )}
 
             {/* Diagnostic Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-deck-300 pb-4">
               <div>
-                <div className="flex items-center gap-2 text-blue-700 text-xs font-mono uppercase font-bold">
-                  <Sparkles className="h-4 w-4" />
-                  <span>Step 3: Structured AI Diagnostic Reasoning</span>
+                <div className="flex items-center gap-2 text-signal-700 text-xs font-mono uppercase font-bold">
+                  <Stethoscope className="h-4 w-4" />
+                  <span>Step 3 &mdash; Understand</span>
                 </div>
-                <h2 className="mt-1 text-xl sm:text-2xl font-bold text-slate-900">
+                <h2 className="mt-1 text-xl sm:text-2xl font-bold text-ink-900">
                   {diagnosticResult.equipment || diagnosticResult.equipmentName}
                 </h2>
                 <div className="mt-1 flex flex-wrap items-center gap-2">
-                  <span className="rounded-md bg-red-50 border border-red-200 px-2 py-0.5 font-mono text-xs font-bold text-red-700">
+                  <span className="rounded-plate bg-alarm-100 border border-alarm-600/30 px-2 py-0.5 font-mono text-xs font-bold text-alarm-700">
                     {diagnosticResult.issue || `${diagnosticResult.errorCode} - ${diagnosticResult.errorTitle}`}
                   </span>
                   <span
-                    className={`rounded-md px-2 py-0.5 text-xs font-bold uppercase tracking-wider ${
+                    className={`rounded-plate px-2 py-0.5 text-xs font-bold uppercase tracking-wider ${
                       diagnosticResult.severity === 'critical'
-                        ? 'bg-red-100 text-red-800 border border-red-300'
+                        ? 'bg-alarm-100 text-alarm-700 border border-alarm-600/40'
                         : diagnosticResult.severity === 'high'
-                        ? 'bg-amber-100 text-amber-800 border border-amber-300'
+                        ? 'bg-signal-100 text-signal-700 border border-signal-600/40'
                         : diagnosticResult.severity === 'medium'
-                        ? 'bg-blue-100 text-blue-800 border border-blue-300'
-                        : 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                        ? 'bg-signal-100 text-signal-700 border border-signal-600/40'
+                        : 'bg-verified-100 text-verified-700 border border-verified-600/40'
                     }`}
                   >
                     Severity: {diagnosticResult.severity || 'HIGH'}
@@ -631,30 +632,40 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
               </div>
 
               {/* Confidence Gauge Badge */}
-              <div className="flex items-center gap-3 rounded-xl border border-blue-200 bg-blue-50 px-4 py-2.5">
+              <div className="flex shrink-0 items-center gap-3 rounded-panel border border-deck-300 bg-deck-100 px-4 py-2.5">
                 <div className="text-right">
-                  <div className="text-[10px] text-blue-700 uppercase font-mono font-bold">Confidence Score</div>
-                  <div className="text-xl font-extrabold text-blue-900">
+                  <div className="fm-label">Confidence</div>
+                  <div className="mt-0.5 font-mono text-xl font-bold text-ink-900">
                     {diagnosticResult.confidence ?? diagnosticResult.confidenceScore}%
                   </div>
                 </div>
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 text-white shadow-xs">
-                  <Zap className="h-5 w-5" />
+                <div className="flex h-9 items-end gap-[3px]" aria-hidden="true">
+                  {Array.from({ length: 8 }).map((_, i) => {
+                    const pct = Number(diagnosticResult.confidence ?? diagnosticResult.confidenceScore ?? 0);
+                    const lit = (i + 1) * 12.5 <= pct;
+                    return (
+                      <span
+                        key={i}
+                        className={lit ? 'w-1.5 bg-signal-500' : 'w-1.5 bg-deck-300'}
+                        style={{ height: `${34 + i * 8}%` }}
+                      />
+                    );
+                  })}
                 </div>
               </div>
             </div>
 
             {/* Safety Warning Card (Highest Priority) */}
-            <div className="rounded-xl border border-amber-300 bg-amber-50 p-4 sm:p-5">
+            <div className="rounded-panel border border-signal-600/40 bg-signal-100 p-4 sm:p-5">
               <div className="flex items-start gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-amber-600 text-white shadow-xs">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-plate bg-signal-600 text-white shadow-xs">
                   <AlertTriangle className="h-5 w-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-amber-900 uppercase tracking-wide">
+                  <h4 className="text-xs font-bold text-signal-700 uppercase tracking-wide">
                     Mandatory Safety Protocol (OSHA 1910.147 LOTO)
                   </h4>
-                  <p className="mt-1 text-xs text-amber-800 leading-relaxed font-medium">
+                  <p className="mt-1 text-xs text-signal-700 leading-relaxed font-medium">
                     {diagnosticResult.safetyWarning}
                   </p>
                 </div>
@@ -664,28 +675,28 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
             {/* Root Cause & Diagnostic Findings Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Likely Cause Card */}
-              <div className="rounded-xl border border-slate-200 bg-[#F8FAFC] p-5 space-y-2">
-                <span className="text-[11px] font-mono uppercase text-blue-700 font-bold">
-                  Likely Cause
+              <div className="rounded-panel border border-deck-300 bg-deck-100 p-5 space-y-2">
+                <span className="text-[11px] font-mono uppercase text-signal-700 font-bold">
+                  FieldMind Analysis
                 </span>
-                <h3 className="text-sm font-bold text-slate-900">
+                <h3 className="text-sm font-bold text-ink-900">
                   {diagnosticResult.likelyCause}
                 </h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
+                <p className="text-xs text-ink-500 leading-relaxed">
                   {diagnosticResult.rootCauseAnalysis}
                 </p>
               </div>
 
               {/* When To Escalate Card */}
-              <div className="rounded-xl border border-indigo-200 bg-indigo-50/60 p-5 space-y-2">
-                <span className="text-[11px] font-mono uppercase text-indigo-700 font-bold flex items-center gap-1">
+              <div className="rounded-panel border border-info-600/30 bg-info-100/60 p-5 space-y-2">
+                <span className="text-[11px] font-mono uppercase text-info-700 font-bold flex items-center gap-1">
                   <ShieldCheck className="h-3.5 w-3.5" />
                   <span>When to Escalate to Senior Specialist</span>
                 </span>
-                <h3 className="text-xs font-bold text-slate-900">
+                <h3 className="text-xs font-bold text-ink-900">
                   Escalation Threshold Criteria:
                 </h3>
-                <p className="text-xs text-slate-700 leading-relaxed">
+                <p className="text-xs text-ink-700 leading-relaxed">
                   {diagnosticResult.whenToEscalate ||
                     'Escalate to Tier-3 Refrigeration Engineer if sensor readings remain out of tolerance after verifying standard physical checklist.'}
                 </p>
@@ -693,22 +704,22 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
             </div>
 
             {/* Recommended Steps Overview */}
-            <div className="rounded-xl border border-slate-200 bg-[#F8FAFC] p-5 space-y-3">
-              <span className="text-[11px] font-mono uppercase text-blue-700 font-bold flex items-center gap-1.5">
+            <div className="rounded-panel border border-deck-300 bg-deck-100 p-5 space-y-3">
+              <span className="text-[11px] font-mono uppercase text-signal-700 font-bold flex items-center gap-1.5">
                 <CheckCircle2 className="h-4 w-4" />
-                <span>Recommended Actionable Steps</span>
+                <span>Recommended Actions</span>
               </span>
               <div className="space-y-2">
                 {(diagnosticResult.steps || diagnosticResult.recommendedSteps?.map((s) => s.instruction) || []).map(
                   (stepText: string, idx: number) => (
                     <div
                       key={idx}
-                      className="flex items-start gap-3 rounded-lg border border-slate-200 bg-white p-3 text-xs shadow-xs"
+                      className="flex items-start gap-3 rounded-plate border border-deck-300 bg-deck-50 p-3 text-xs shadow-xs"
                     >
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-600 text-[10px] font-bold text-white">
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-chassis-900 text-[10px] font-bold text-white">
                         {idx + 1}
                       </span>
-                      <span className="text-slate-800 font-medium leading-relaxed">{stepText}</span>
+                      <span className="text-ink-800 font-medium leading-relaxed">{stepText}</span>
                     </div>
                   )
                 )}
@@ -716,30 +727,30 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
             </div>
 
             {/* Source Documentation & Citations */}
-            <div className="rounded-xl border border-slate-200 bg-[#F8FAFC] p-5 space-y-3">
-              <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase text-blue-700 font-bold">
+            <div className="rounded-panel border border-deck-300 bg-deck-100 p-5 space-y-3">
+              <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase text-signal-700 font-bold">
                 <BookOpen className="h-4 w-4" />
-                <span>Source Documentation & Verified Citations</span>
+                <span>Relevant Information &mdash; OEM Documentation</span>
               </div>
 
               {diagnosticResult.documentation && diagnosticResult.documentation.length > 0 ? (
                 <div className="space-y-3">
                   {diagnosticResult.documentation.map((doc, idx) => (
-                    <div key={idx} className="rounded-lg border border-slate-200 bg-white p-4 space-y-2 shadow-xs">
+                    <div key={idx} className="rounded-plate border border-deck-300 bg-deck-50 p-4 space-y-2 shadow-xs">
                       <div className="flex flex-wrap items-center justify-between gap-2">
-                        <span className="text-xs font-bold text-slate-900">{doc.document}</span>
+                        <span className="text-xs font-bold text-ink-900">{doc.document}</span>
                         {doc.section && (
-                          <span className="rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-mono text-slate-700 font-semibold">
+                          <span className="rounded-plate bg-deck-200 px-2 py-0.5 text-[10px] font-mono text-ink-700 font-semibold">
                             {doc.section}
                           </span>
                         )}
                       </div>
-                      <div className="text-[11px] font-semibold text-blue-700 flex items-center gap-1">
+                      <div className="text-[11px] font-semibold text-signal-700 flex items-center gap-1">
                         <span>Citation:</span>
-                        <span className="text-slate-800 font-normal">{doc.citation}</span>
+                        <span className="text-ink-800 font-normal">{doc.citation}</span>
                       </div>
                       {doc.excerpt && (
-                        <blockquote className="border-l-2 border-blue-600 bg-slate-50 p-2.5 text-xs italic text-slate-700 leading-relaxed rounded-r-md">
+                        <blockquote className="border-l-2 border-signal-500 bg-deck-100 p-2.5 text-xs italic text-ink-700 leading-relaxed rounded-r-md">
                           "{doc.excerpt}"
                         </blockquote>
                       )}
@@ -747,49 +758,49 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
                   ))}
                 </div>
               ) : (
-                <div className="rounded-lg border border-slate-200 bg-white p-4 space-y-2">
-                  <div className="text-xs font-bold text-slate-900">{diagnosticResult.oemManualReference}</div>
-                  <blockquote className="border-l-2 border-blue-600 bg-slate-50 p-2.5 text-xs italic text-slate-700 leading-relaxed rounded-r-md">
+                <div className="rounded-plate border border-deck-300 bg-deck-50 p-4 space-y-2">
+                  <div className="text-xs font-bold text-ink-900">{diagnosticResult.oemManualReference}</div>
+                  <blockquote className="border-l-2 border-signal-500 bg-deck-100 p-2.5 text-xs italic text-ink-700 leading-relaxed rounded-r-md">
                     "{diagnosticResult.manualExcerpt}"
                   </blockquote>
                 </div>
               )}
             </div>
 
-            {/* Simulated Live Telemetry Snapshot */}
+            {/* Live Telemetry Snapshot */}
             {diagnosticResult.telemetrySnapshot && (
-              <div className="rounded-xl border border-slate-200 bg-[#F8FAFC] p-4">
-                <span className="text-[11px] font-mono uppercase text-slate-500 font-bold mb-3 block">
-                  Simulated Operating Transducer Readings
+              <div className="rounded-panel border border-deck-300 bg-deck-100 p-4">
+                <span className="text-[11px] font-mono uppercase text-ink-500 font-bold mb-3 block">
+                  Operating Transducer Readings
                 </span>
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 text-center">
-                  <div className="rounded-lg bg-white p-2.5 border border-slate-200 shadow-xs">
-                    <div className="text-[10px] text-slate-500">Discharge Temp</div>
-                    <div className="font-mono text-xs font-bold text-red-600 mt-0.5">
+                  <div className="rounded-plate bg-deck-50 p-2.5 border border-deck-300 shadow-xs">
+                    <div className="text-[10px] text-ink-500">Discharge Temp</div>
+                    <div className="font-mono text-xs font-bold text-alarm-600 mt-0.5">
                       {diagnosticResult.telemetrySnapshot.dischargeTemp}
                     </div>
                   </div>
-                  <div className="rounded-lg bg-white p-2.5 border border-slate-200 shadow-xs">
-                    <div className="text-[10px] text-slate-500">Suction Pressure</div>
-                    <div className="font-mono text-xs font-bold text-slate-900 mt-0.5">
+                  <div className="rounded-plate bg-deck-50 p-2.5 border border-deck-300 shadow-xs">
+                    <div className="text-[10px] text-ink-500">Suction Pressure</div>
+                    <div className="font-mono text-xs font-bold text-ink-900 mt-0.5">
                       {diagnosticResult.telemetrySnapshot.suctionPressure}
                     </div>
                   </div>
-                  <div className="rounded-lg bg-white p-2.5 border border-slate-200 shadow-xs">
-                    <div className="text-[10px] text-slate-500">Ambient Temp</div>
-                    <div className="font-mono text-xs font-bold text-slate-900 mt-0.5">
+                  <div className="rounded-plate bg-deck-50 p-2.5 border border-deck-300 shadow-xs">
+                    <div className="text-[10px] text-ink-500">Ambient Temp</div>
+                    <div className="font-mono text-xs font-bold text-ink-900 mt-0.5">
                       {diagnosticResult.telemetrySnapshot.ambientTemp}
                     </div>
                   </div>
-                  <div className="rounded-lg bg-white p-2.5 border border-slate-200 shadow-xs">
-                    <div className="text-[10px] text-slate-500">Subcooling</div>
-                    <div className="font-mono text-xs font-bold text-blue-700 mt-0.5">
+                  <div className="rounded-plate bg-deck-50 p-2.5 border border-deck-300 shadow-xs">
+                    <div className="text-[10px] text-ink-500">Subcooling</div>
+                    <div className="font-mono text-xs font-bold text-signal-700 mt-0.5">
                       {diagnosticResult.telemetrySnapshot.subcooling}
                     </div>
                   </div>
-                  <div className="rounded-lg bg-white p-2.5 border border-slate-200 shadow-xs">
-                    <div className="text-[10px] text-slate-500">Superheat</div>
-                    <div className="font-mono text-xs font-bold text-blue-700 mt-0.5">
+                  <div className="rounded-plate bg-deck-50 p-2.5 border border-deck-300 shadow-xs">
+                    <div className="text-[10px] text-ink-500">Superheat</div>
+                    <div className="font-mono text-xs font-bold text-signal-700 mt-0.5">
                       {diagnosticResult.telemetrySnapshot.superheat}
                     </div>
                   </div>
@@ -798,22 +809,22 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
             )}
 
             {/* Required Tools & Est Time */}
-            <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-slate-200 bg-[#F8FAFC] p-4 text-xs">
+            <div className="flex flex-wrap items-center justify-between gap-4 rounded-panel border border-deck-300 bg-deck-100 p-4 text-xs">
               <div>
-                <span className="text-slate-500">Required Tools: </span>
-                <span className="text-slate-900 font-bold">{diagnosticResult.requiredTools?.join(' • ')}</span>
+                <span className="text-ink-500">Required Tools: </span>
+                <span className="text-ink-900 font-bold">{diagnosticResult.requiredTools?.join(' • ')}</span>
               </div>
-              <div className="flex items-center gap-1.5 text-blue-700 font-bold">
+              <div className="flex items-center gap-1.5 text-signal-700 font-bold">
                 <Clock className="h-4 w-4" />
                 <span>Est. Resolution: {diagnosticResult.estimatedTimeMinutes} min</span>
               </div>
             </div>
 
             {/* Navigation Buttons */}
-            <div className="flex items-center justify-between pt-4 border-t border-slate-200">
+            <div className="flex items-center justify-between pt-4 border-t border-deck-300">
               <button
                 onClick={() => setCurrentStep(2)}
-                className="flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer shadow-xs"
+                className="flex items-center gap-1.5 rounded-panel border border-deck-300 bg-deck-50 px-4 py-2.5 text-xs font-semibold text-ink-700 hover:bg-deck-100 cursor-pointer shadow-xs"
               >
                 <ArrowLeft className="h-4 w-4" />
                 <span>Modify Parameters</span>
@@ -829,18 +840,18 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
                       'What should I check first for this alarm?'
                     )
                   }
-                  className="flex items-center gap-1.5 rounded-xl border border-blue-200 bg-blue-50 px-4 py-2.5 text-xs font-bold text-blue-700 hover:bg-blue-100 cursor-pointer shadow-xs"
+                  className="flex items-center gap-1.5 rounded-panel border border-signal-600/30 bg-signal-100 px-4 py-2.5 text-xs font-bold text-signal-700 hover:bg-signal-100 cursor-pointer shadow-xs"
                 >
                   <MessageSquare className="h-4 w-4" />
-                  <span>Ask AI Copilot</span>
+                  <span>Ask FieldMind</span>
                 </button>
 
                 <button
                   id="diag-step3-proceed-btn"
                   onClick={() => setCurrentStep(4)}
-                  className="flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-xs font-bold text-white shadow-md shadow-blue-600/20 transition hover:bg-blue-700 cursor-pointer"
+                  className="flex items-center gap-2 rounded-panel bg-chassis-900 px-6 py-3 text-xs font-bold text-white shadow-md shadow-chassis-900/20 transition hover:bg-chassis-800 cursor-pointer"
                 >
-                  <span>Proceed to Guided Repair Procedure</span>
+                  <span>Start the guided repair</span>
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </div>
@@ -850,25 +861,25 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
 
         {/* STEP 4: GUIDED REPAIR PROCEDURE */}
         {currentStep === 4 && (
-          <div className="space-y-6 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+          <div className="space-y-6 rounded-panel border border-deck-300 bg-deck-50 p-6 sm:p-8 shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-deck-300 pb-4">
               <div>
-                <div className="flex items-center gap-2 text-blue-700 text-xs font-mono uppercase font-bold">
-                  <ShieldCheck className="h-4 w-4 text-emerald-600" />
-                  <span>Step 4: Interactive Guided Repair Procedure</span>
+                <div className="flex items-center gap-2 text-signal-700 text-xs font-mono uppercase font-bold">
+                  <ShieldCheck className="h-4 w-4 text-verified-600" />
+                  <span>Step 4 &mdash; Guide</span>
                 </div>
-                <h2 className="mt-1 text-xl sm:text-2xl font-bold text-slate-900">
-                  Step-by-Step Resolution: {selectedEquipment.name}
+                <h2 className="mt-1 text-xl sm:text-2xl font-bold text-ink-900">
+                  Guided Repair: {selectedEquipment.name}
                 </h2>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-ink-500">
                   Follow each safety-verified checklist item. Mark complete as you verify on physical equipment.
                 </p>
               </div>
 
               {/* Progress Count */}
-              <div className="rounded-xl border border-slate-200 bg-[#F8FAFC] px-4 py-2 text-right">
-                <div className="text-[10px] text-slate-500 uppercase font-mono font-bold">Progress</div>
-                <div className="text-sm font-bold text-slate-900">
+              <div className="rounded-panel border border-deck-300 bg-deck-100 px-4 py-2 text-right">
+                <div className="text-[10px] text-ink-500 uppercase font-mono font-bold">Progress</div>
+                <div className="text-sm font-bold text-ink-900">
                   {repairSteps.filter((s) => s.completed).length} / {repairSteps.length} Steps Done
                 </div>
               </div>
@@ -883,40 +894,40 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
                 return (
                   <div
                     key={step.id}
-                    className={`rounded-xl border p-4 sm:p-5 transition ${
+                    className={`rounded-panel border p-4 sm:p-5 transition ${
                       isActive
-                        ? 'border-blue-500 bg-blue-50/40 ring-1 ring-blue-500/50 shadow-xs'
+                        ? 'border-signal-500 bg-signal-100/40 ring-1 ring-signal-500/50 shadow-xs'
                         : isDone
-                        ? 'border-emerald-200 bg-emerald-50/50'
-                        : 'border-slate-200 bg-white opacity-80'
+                        ? 'border-verified-600/30 bg-verified-100/50'
+                        : 'border-deck-300 bg-deck-50 opacity-80'
                     }`}
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-start gap-3.5">
                         <button
                           onClick={() => handleToggleStepCompleted(idx)}
-                          className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-xs font-bold transition cursor-pointer ${
+                          className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-plate border text-xs font-bold transition cursor-pointer ${
                             isDone
-                              ? 'bg-emerald-600 border-emerald-600 text-white'
+                              ? 'bg-verified-600 border-verified-600 text-white'
                               : isActive
-                              ? 'border-blue-600 text-blue-700 bg-white'
-                              : 'border-slate-300 text-slate-500 bg-slate-50'
+                              ? 'border-signal-500 text-signal-700 bg-deck-50'
+                              : 'border-deck-300 text-ink-500 bg-deck-100'
                           }`}
                         >
                           {isDone ? <Check className="h-4 w-4 stroke-[3]" /> : idx + 1}
                         </button>
 
                         <div className="space-y-1.5">
-                          <h4 className="text-sm sm:text-base font-bold text-slate-900">
+                          <h4 className="text-sm sm:text-base font-bold text-ink-900">
                             {step.instruction}
                           </h4>
-                          <p className="text-xs text-slate-600 leading-relaxed">
+                          <p className="text-xs text-ink-500 leading-relaxed">
                             {step.details}
                           </p>
 
                           {step.safetyCheck && (
-                            <div className="mt-2 inline-flex items-center gap-1.5 rounded-md bg-amber-50 border border-amber-200 px-2.5 py-1 text-[11px] font-bold text-amber-800">
-                              <AlertTriangle className="h-3.5 w-3.5 text-amber-600" />
+                            <div className="mt-2 inline-flex items-center gap-1.5 rounded-plate bg-signal-100 border border-signal-600/30 px-2.5 py-1 text-[11px] font-bold text-signal-700">
+                              <AlertTriangle className="h-3.5 w-3.5 text-signal-700" />
                               <span>{step.safetyCheck}</span>
                             </div>
                           )}
@@ -934,11 +945,11 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
                               `What should I check for step ${idx + 1}: ${step.instruction}?`
                             )
                           }
-                          title="Ask AI regarding this specific step"
-                          className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-[11px] font-bold text-blue-700 hover:bg-slate-50 cursor-pointer shadow-xs"
+                          title="Ask FieldMind about this step"
+                          className="flex items-center gap-1 rounded-plate border border-deck-300 bg-deck-50 px-2.5 py-1.5 text-[11px] font-bold text-signal-700 hover:bg-deck-100 cursor-pointer shadow-xs"
                         >
-                          <Bot className="h-3.5 w-3.5" />
-                          <span>Ask AI</span>
+                          <MessageSquare className="h-3.5 w-3.5" />
+                          <span>Ask FieldMind</span>
                         </button>
 
                         <button
@@ -946,10 +957,10 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
                             setActiveStepIndex(idx);
                             handleToggleStepCompleted(idx);
                           }}
-                          className={`rounded-lg px-3 py-1.5 text-xs font-bold transition cursor-pointer shadow-xs ${
+                          className={`rounded-plate px-3 py-1.5 text-xs font-bold transition cursor-pointer shadow-xs ${
                             isDone
-                              ? 'bg-emerald-100 text-emerald-800 border border-emerald-300 hover:bg-emerald-200'
-                              : 'bg-blue-600 text-white hover:bg-blue-700'
+                              ? 'bg-verified-100 text-verified-700 border border-verified-600/40 hover:bg-verified-100'
+                              : 'bg-chassis-900 text-white hover:bg-chassis-800'
                           }`}
                         >
                           {isDone ? 'Completed ✓' : 'Mark Step Complete'}
@@ -962,10 +973,10 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
             </div>
 
             {/* Guided Navigation Controls */}
-            <div className="flex items-center justify-between pt-4 border-t border-slate-200">
+            <div className="flex items-center justify-between pt-4 border-t border-deck-300">
               <button
                 onClick={() => setCurrentStep(3)}
-                className="flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer shadow-xs"
+                className="flex items-center gap-1.5 rounded-panel border border-deck-300 bg-deck-50 px-4 py-2.5 text-xs font-semibold text-ink-700 hover:bg-deck-100 cursor-pointer shadow-xs"
               >
                 <ArrowLeft className="h-4 w-4" />
                 <span>Back to Diagnosis</span>
@@ -975,7 +986,7 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
                 <button
                   id="diag-step4-next-step-btn"
                   onClick={handleNextRepairStep}
-                  className="flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-xs font-bold text-white shadow-md shadow-blue-600/20 transition hover:bg-blue-700 cursor-pointer"
+                  className="flex items-center gap-2 rounded-panel bg-chassis-900 px-6 py-3 text-xs font-bold text-white shadow-md shadow-chassis-900/20 transition hover:bg-chassis-800 cursor-pointer"
                 >
                   <span>
                     {activeStepIndex < repairSteps.length - 1
@@ -991,60 +1002,60 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
 
         {/* STEP 5: COMPLETE THE JOB */}
         {currentStep === 5 && (
-          <div className="space-y-6 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs">
+          <div className="space-y-6 rounded-panel border border-deck-300 bg-deck-50 p-6 sm:p-8 shadow-xs">
             <div>
-              <div className="flex items-center gap-2 text-emerald-700 text-xs font-mono uppercase font-bold">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                <span>Step 5: Job Verification & Signoff</span>
+              <div className="flex items-center gap-2 text-verified-700 text-xs font-mono uppercase font-bold">
+                <CheckCircle2 className="h-4 w-4 text-verified-600" />
+                <span>Step 5 &mdash; Complete</span>
               </div>
-              <h2 className="mt-1 text-xl sm:text-2xl font-bold text-slate-900">
+              <h2 className="mt-1 text-xl sm:text-2xl font-bold text-ink-900">
                 Complete Job & Record Verification Readings
               </h2>
-              <p className="mt-1 text-xs sm:text-sm text-slate-600">
+              <p className="mt-1 text-xs sm:text-sm text-ink-500">
                 Confirm post-service readings, parts used, and technician sign-off notes before generating the official service report.
               </p>
             </div>
 
             {/* Post-repair Telemetry Verification */}
-            <div className="rounded-xl border border-slate-200 bg-[#F8FAFC] p-4">
-              <span className="text-xs font-bold text-slate-900 uppercase tracking-wide mb-3 block">
+            <div className="rounded-panel border border-deck-300 bg-deck-100 p-4">
+              <span className="text-xs font-bold text-ink-900 uppercase tracking-wide mb-3 block">
                 Post-Service Operating Verification Readings
               </span>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 <div>
-                  <label className="text-[10px] font-bold text-slate-500">Discharge Temp (Normal)</label>
+                  <label className="text-[10px] font-bold text-ink-500">Discharge Temp (Normal)</label>
                   <input
                     type="text"
                     value={finalReadings.dischargeTemp}
                     onChange={(e) => setFinalReadings({ ...finalReadings, dischargeTemp: e.target.value })}
-                    className="mt-1 w-full rounded-lg border border-slate-300 bg-white p-2 text-xs text-slate-900 focus:border-blue-500 focus:outline-none shadow-xs"
+                    className="mt-1 w-full rounded-plate border border-deck-300 bg-deck-50 p-2 text-xs text-ink-900 focus:border-signal-500 focus:outline-none shadow-xs"
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-bold text-slate-500">Suction Pressure (PSIG)</label>
+                  <label className="text-[10px] font-bold text-ink-500">Suction Pressure (PSIG)</label>
                   <input
                     type="text"
                     value={finalReadings.suctionPressure}
                     onChange={(e) => setFinalReadings({ ...finalReadings, suctionPressure: e.target.value })}
-                    className="mt-1 w-full rounded-lg border border-slate-300 bg-white p-2 text-xs text-slate-900 focus:border-blue-500 focus:outline-none shadow-xs"
+                    className="mt-1 w-full rounded-plate border border-deck-300 bg-deck-50 p-2 text-xs text-ink-900 focus:border-signal-500 focus:outline-none shadow-xs"
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-bold text-slate-500">Motor Amperage Draw</label>
+                  <label className="text-[10px] font-bold text-ink-500">Motor Amperage Draw</label>
                   <input
                     type="text"
                     value={finalReadings.runningAmps}
                     onChange={(e) => setFinalReadings({ ...finalReadings, runningAmps: e.target.value })}
-                    className="mt-1 w-full rounded-lg border border-slate-300 bg-white p-2 text-xs text-slate-900 focus:border-blue-500 focus:outline-none shadow-xs"
+                    className="mt-1 w-full rounded-plate border border-deck-300 bg-deck-50 p-2 text-xs text-ink-900 focus:border-signal-500 focus:outline-none shadow-xs"
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-bold text-slate-500">Ambient Temp (°F)</label>
+                  <label className="text-[10px] font-bold text-ink-500">Ambient Temp (°F)</label>
                   <input
                     type="text"
                     value={finalReadings.ambientTemp}
                     onChange={(e) => setFinalReadings({ ...finalReadings, ambientTemp: e.target.value })}
-                    className="mt-1 w-full rounded-lg border border-slate-300 bg-white p-2 text-xs text-slate-900 focus:border-blue-500 focus:outline-none shadow-xs"
+                    className="mt-1 w-full rounded-plate border border-deck-300 bg-deck-50 p-2 text-xs text-ink-900 focus:border-signal-500 focus:outline-none shadow-xs"
                   />
                 </div>
               </div>
@@ -1052,44 +1063,44 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
 
             {/* Parts Replaced */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2">
+              <label className="block text-xs font-bold text-ink-700 uppercase tracking-wide mb-2">
                 Parts & Materials Utilized
               </label>
               <input
                 type="text"
                 value={partsReplacedInput}
                 onChange={(e) => setPartsReplacedInput(e.target.value)}
-                className="w-full rounded-xl border border-slate-300 bg-white p-3 text-xs text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none shadow-xs"
+                className="w-full rounded-panel border border-deck-300 bg-deck-50 p-3 text-xs text-ink-900 placeholder-ink-400 focus:border-signal-500 focus:ring-1 focus:ring-signal-500 focus:outline-none shadow-xs"
               />
             </div>
 
             {/* Final Technician Notes */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2">
+              <label className="block text-xs font-bold text-ink-700 uppercase tracking-wide mb-2">
                 Technician Resolution Summary & Field Log
               </label>
               <textarea
                 rows={3}
                 value={technicianSignoffNotes}
                 onChange={(e) => setTechnicianSignoffNotes(e.target.value)}
-                className="w-full rounded-xl border border-slate-300 bg-white p-3 text-xs text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none shadow-xs"
+                className="w-full rounded-panel border border-deck-300 bg-deck-50 p-3 text-xs text-ink-900 placeholder-ink-400 focus:border-signal-500 focus:ring-1 focus:ring-signal-500 focus:outline-none shadow-xs"
               />
             </div>
 
             {/* Signoff Checkbox */}
-            <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 flex items-center gap-3">
-              <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0" />
-              <div className="text-xs text-emerald-900">
+            <div className="rounded-panel border border-verified-600/30 bg-verified-100 p-4 flex items-center gap-3">
+              <CheckCircle2 className="h-5 w-5 text-verified-600 shrink-0" />
+              <div className="text-xs text-verified-700">
                 <span className="font-bold">Technician Verification: </span>
                 All 5 safety inspection procedures were executed per OEM guidelines. The E04 thermal alarm was cleared, and the system is verified operating safely within OEM thermal bounds.
               </div>
             </div>
 
             {/* Navigation Buttons */}
-            <div className="flex items-center justify-between pt-4 border-t border-slate-200">
+            <div className="flex items-center justify-between pt-4 border-t border-deck-300">
               <button
                 onClick={() => setCurrentStep(4)}
-                className="flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer shadow-xs"
+                className="flex items-center gap-1.5 rounded-panel border border-deck-300 bg-deck-50 px-4 py-2.5 text-xs font-semibold text-ink-700 hover:bg-deck-100 cursor-pointer shadow-xs"
               >
                 <ArrowLeft className="h-4 w-4" />
                 <span>Back to Procedures</span>
@@ -1099,17 +1110,17 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
                 id="diag-step5-gen-report-btn"
                 onClick={handleGenerateServiceReport}
                 disabled={isGeneratingReport}
-                className="flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 text-xs font-bold text-white shadow-md shadow-emerald-600/20 transition hover:bg-emerald-700 disabled:opacity-60 cursor-pointer"
+                className="flex items-center gap-2 rounded-panel bg-verified-600 px-6 py-3 text-xs font-bold text-white shadow-md shadow-chassis-900/20 transition hover:bg-verified-700 disabled:opacity-60 cursor-pointer"
               >
                 {isGeneratingReport ? (
                   <>
-                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                    <span>Compiling AI Service Report...</span>
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-deck-50 border-t-transparent" />
+                    <span>Compiling service report&hellip;</span>
                   </>
                 ) : (
                   <>
                     <FileText className="h-4 w-4 fill-white" />
-                    <span>Generate Structured Service Report</span>
+                    <span>Generate FieldMind Service Report</span>
                     <ArrowRight className="h-4 w-4" />
                   </>
                 )}
@@ -1120,19 +1131,19 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
 
         {/* STEP 6: STRUCTURED SERVICE REPORT */}
         {currentStep === 6 && generatedReport && (
-          <div className="space-y-6 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xs">
+          <div className="space-y-6 rounded-panel border border-deck-300 bg-deck-50 p-6 sm:p-8 shadow-xs">
             {/* Header / Actions */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4 no-print">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-deck-300 pb-4 no-print">
               <div>
-                <div className="flex items-center gap-2 text-emerald-700 text-xs font-mono uppercase font-bold">
+                <div className="flex items-center gap-2 text-verified-700 text-xs font-mono uppercase font-bold">
                   <FileText className="h-4 w-4" />
-                  <span>Step 6: Official Service Documentation</span>
+                  <span>Step 6 &mdash; Report</span>
                 </div>
-                <h2 className="mt-1 text-xl sm:text-2xl font-bold text-slate-900">
-                  FieldMind AI Service Report
+                <h2 className="mt-1 text-xl sm:text-2xl font-bold text-ink-900">
+                  FieldMind Service Report
                 </h2>
-                <p className="text-xs text-slate-500">
-                  Report ID: <span className="text-blue-700 font-mono font-bold">{generatedReport.id}</span> • Generated {new Date(generatedReport.timestamp).toLocaleString()}
+                <p className="text-xs text-ink-500">
+                  Report ID: <span className="text-signal-700 font-mono font-bold">{generatedReport.id}</span> • Generated {new Date(generatedReport.timestamp).toLocaleString()}
                 </p>
               </div>
 
@@ -1141,7 +1152,7 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
                 <button
                   id="report-download-btn"
                   onClick={handleDownloadReport}
-                  className="flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 transition hover:bg-slate-50 cursor-pointer shadow-xs"
+                  className="flex items-center gap-1.5 rounded-panel border border-deck-300 bg-deck-50 px-3.5 py-2 text-xs font-bold text-ink-700 transition hover:bg-deck-100 cursor-pointer shadow-xs"
                 >
                   <Download className="h-3.5 w-3.5" />
                   <span>Download / Print Report</span>
@@ -1151,10 +1162,10 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
                   id="report-save-btn"
                   onClick={handleSaveToFleet}
                   disabled={isReportSaved}
-                  className={`flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold transition cursor-pointer shadow-xs ${
+                  className={`flex items-center gap-1.5 rounded-panel px-4 py-2 text-xs font-bold transition cursor-pointer shadow-xs ${
                     isReportSaved
-                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-300'
-                      : 'bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-600/20'
+                      ? 'bg-verified-100 text-verified-700 border border-verified-600/40'
+                      : 'bg-chassis-900 text-white hover:bg-chassis-800 shadow-md shadow-chassis-900/20'
                   }`}
                 >
                   <Save className="h-3.5 w-3.5" />
@@ -1164,7 +1175,7 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
                 <button
                   id="report-supervisor-view-btn"
                   onClick={onViewSupervisor}
-                  className="flex items-center gap-1.5 rounded-xl border border-blue-200 bg-blue-50 px-3.5 py-2 text-xs font-bold text-blue-700 hover:bg-blue-100 cursor-pointer shadow-xs"
+                  className="flex items-center gap-1.5 rounded-panel border border-signal-600/30 bg-signal-100 px-3.5 py-2 text-xs font-bold text-signal-700 hover:bg-signal-100 cursor-pointer shadow-xs"
                 >
                   <span>Open Supervisor Hub</span>
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -1173,75 +1184,79 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
             </div>
 
             {/* The Formal Document Paper Layout */}
-            <div className="rounded-2xl border border-slate-200 bg-[#F8FAFC] p-6 sm:p-8 space-y-6 text-xs text-slate-700 shadow-xs">
+            <div className="fm-doc rounded-panel border border-deck-300 bg-deck-100 p-6 sm:p-8 space-y-6 text-xs text-ink-700 shadow-xs">
               {/* Report Letterhead */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-deck-300 pb-5">
                 <div>
-                  <div className="flex items-center gap-2">
-                    <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600 font-bold text-white text-xs shadow-xs">
-                      F
-                    </div>
-                    <span className="text-base font-extrabold text-slate-900">FIELDMIND AI // FIELD SERVICE REPORT</span>
+                  <div className="flex items-center gap-2.5">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-plate bg-chassis-900 text-deck-50 shadow-xs">
+                      <FieldMindMark size={19} />
+                    </span>
+                    <span className="fm-display text-lg text-ink-900">
+                      Field Service Report
+                    </span>
                   </div>
-                  <p className="mt-1 text-[11px] text-slate-500">Enterprise HVAC & Industrial Maintenance System</p>
+                  <p className="mt-1.5 text-[11px] text-ink-500">
+                    FieldMind AI &middot; Commercial HVAC &amp; industrial maintenance
+                  </p>
                 </div>
 
                 <div className="text-left sm:text-right font-mono text-[11px]">
-                  <div className="text-slate-500">REPORT NO: <span className="text-blue-700 font-bold">{generatedReport.id}</span></div>
-                  <div className="text-slate-500">STATUS: <span className="text-emerald-700 font-bold uppercase">{generatedReport.status}</span></div>
+                  <div className="text-ink-500">REPORT NO: <span className="text-signal-700 font-bold">{generatedReport.id}</span></div>
+                  <div className="text-ink-500">STATUS: <span className="text-verified-700 font-bold uppercase">{generatedReport.status}</span></div>
                 </div>
               </div>
 
               {/* Meta Grid: Equipment & Tech */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 rounded-xl bg-white p-4 border border-slate-200 shadow-xs">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 rounded-panel bg-deck-50 p-4 border border-deck-300 shadow-xs">
                 <div>
-                  <span className="text-[10px] uppercase text-slate-400 font-mono block">Equipment</span>
-                  <span className="font-bold text-slate-900 text-xs block truncate">{generatedReport.equipmentName}</span>
-                  <span className="text-[11px] text-slate-500">{generatedReport.modelNumber}</span>
+                  <span className="text-[10px] uppercase text-ink-400 font-mono block">Equipment</span>
+                  <span className="font-bold text-ink-900 text-xs block truncate">{generatedReport.equipmentName}</span>
+                  <span className="text-[11px] text-ink-500">{generatedReport.modelNumber}</span>
                 </div>
                 <div>
-                  <span className="text-[10px] uppercase text-slate-400 font-mono block">Location</span>
-                  <span className="font-bold text-slate-900 text-xs block">{generatedReport.location}</span>
-                  <span className="text-[11px] text-slate-500">Serial: {generatedReport.serialNumber}</span>
+                  <span className="text-[10px] uppercase text-ink-400 font-mono block">Location</span>
+                  <span className="font-bold text-ink-900 text-xs block">{generatedReport.location}</span>
+                  <span className="text-[11px] text-ink-500">Serial: {generatedReport.serialNumber}</span>
                 </div>
                 <div>
-                  <span className="text-[10px] uppercase text-slate-400 font-mono block">Technician</span>
-                  <span className="font-bold text-slate-900 text-xs block">{generatedReport.technicianName}</span>
-                  <span className="text-[11px] text-slate-500">ID: {generatedReport.technicianId}</span>
+                  <span className="text-[10px] uppercase text-ink-400 font-mono block">Technician</span>
+                  <span className="font-bold text-ink-900 text-xs block">{generatedReport.technicianName}</span>
+                  <span className="text-[11px] text-ink-500">ID: {generatedReport.technicianId}</span>
                 </div>
                 <div>
-                  <span className="text-[10px] uppercase text-slate-400 font-mono block">Reported Alarm</span>
-                  <span className="font-bold text-red-600 text-xs block">{generatedReport.reportedIssue}</span>
-                  <span className="text-[11px] text-blue-700 font-semibold">Confidence: {generatedReport.confidenceScore}%</span>
+                  <span className="text-[10px] uppercase text-ink-400 font-mono block">Reported Alarm</span>
+                  <span className="font-bold text-alarm-600 text-xs block">{generatedReport.reportedIssue}</span>
+                  <span className="text-[11px] text-signal-700 font-semibold">Confidence: {generatedReport.confidenceScore}%</span>
                 </div>
               </div>
 
-              {/* AI Diagnosis & Root Cause */}
+              {/* Diagnosis & Root Cause */}
               <div className="space-y-3">
-                <h4 className="text-xs font-bold text-blue-700 uppercase tracking-wider font-mono">
-                  1. AI Diagnosis & Root Cause Analysis
+                <h4 className="text-xs font-bold text-signal-700 uppercase tracking-wider font-mono">
+                  1. FieldMind Diagnosis & Root Cause
                 </h4>
-                <div className="rounded-xl border border-slate-200 bg-white p-4 space-y-2 shadow-xs">
-                  <p className="font-bold text-slate-900">{generatedReport.aiDiagnosisSummary}</p>
-                  <p className="text-slate-600 leading-relaxed text-xs">{generatedReport.rootCause}</p>
+                <div className="rounded-panel border border-deck-300 bg-deck-50 p-4 space-y-2 shadow-xs">
+                  <p className="font-bold text-ink-900">{generatedReport.aiDiagnosisSummary}</p>
+                  <p className="text-ink-500 leading-relaxed text-xs">{generatedReport.rootCause}</p>
                 </div>
               </div>
 
               {/* Steps Performed */}
               <div className="space-y-3">
-                <h4 className="text-xs font-bold text-blue-700 uppercase tracking-wider font-mono">
+                <h4 className="text-xs font-bold text-signal-700 uppercase tracking-wider font-mono">
                   2. Safety Steps & Corrective Procedures Executed
                 </h4>
                 <div className="space-y-2">
                   {generatedReport.stepsCompleted.map((step) => (
                     <div
                       key={step.stepNumber}
-                      className="flex items-start gap-2.5 rounded-lg border border-slate-200 bg-white p-3 shadow-xs"
+                      className="flex items-start gap-2.5 rounded-plate border border-deck-300 bg-deck-50 p-3 shadow-xs"
                     >
-                      <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <CheckCircle2 className="h-4 w-4 text-verified-600 shrink-0 mt-0.5" />
                       <div>
-                        <div className="font-bold text-slate-900">Step {step.stepNumber}: {step.description}</div>
-                        {step.notes && <div className="text-[11px] text-slate-500 mt-0.5">{step.notes}</div>}
+                        <div className="font-bold text-ink-900">Step {step.stepNumber}: {step.description}</div>
+                        {step.notes && <div className="text-[11px] text-ink-500 mt-0.5">{step.notes}</div>}
                       </div>
                     </div>
                   ))}
@@ -1251,61 +1266,64 @@ export const DiagnosisFlow: React.FC<DiagnosisFlowProps> = ({
               {/* Resolution Narrative & Parts */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <h4 className="text-xs font-bold text-blue-700 uppercase tracking-wider font-mono">
+                  <h4 className="text-xs font-bold text-signal-700 uppercase tracking-wider font-mono">
                     3. Final Resolution Narrative
                   </h4>
-                  <div className="rounded-xl border border-slate-200 bg-white p-3.5 text-xs text-slate-700 leading-relaxed shadow-xs">
+                  <div className="rounded-panel border border-deck-300 bg-deck-50 p-3.5 text-xs text-ink-700 leading-relaxed shadow-xs">
                     {generatedReport.resolutionSummary}
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <h4 className="text-xs font-bold text-blue-700 uppercase tracking-wider font-mono">
+                  <h4 className="text-xs font-bold text-signal-700 uppercase tracking-wider font-mono">
                     4. Parts Replaced & Safety Compliance
                   </h4>
-                  <div className="rounded-xl border border-slate-200 bg-white p-3.5 space-y-2 shadow-xs">
+                  <div className="rounded-panel border border-deck-300 bg-deck-50 p-3.5 space-y-2 shadow-xs">
                     <div>
-                      <span className="text-slate-500">Parts Used: </span>
-                      <span className="font-bold text-slate-900">{generatedReport.partsReplaced.join(', ') || 'N/A'}</span>
+                      <span className="text-ink-500">Parts Used: </span>
+                      <span className="font-bold text-ink-900">{generatedReport.partsReplaced.join(', ') || 'N/A'}</span>
                     </div>
                     <div>
-                      <span className="text-slate-500">Safety Verified: </span>
-                      <span className="font-bold text-emerald-700">OSHA LOTO 1910.147 Compliant</span>
+                      <span className="text-ink-500">Safety Verified: </span>
+                      <span className="font-bold text-verified-700">OSHA LOTO 1910.147 Compliant</span>
                     </div>
-                    <p className="text-[11px] text-slate-500">{generatedReport.safetyNotes}</p>
+                    <p className="text-[11px] text-ink-500">{generatedReport.safetyNotes}</p>
                   </div>
                 </div>
               </div>
 
               {/* Signoff Stamp */}
-              <div className="border-t border-slate-200 pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-[11px] text-slate-500">
+              <div className="border-t border-deck-300 pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-[11px] text-ink-500">
                 <div>
-                  <span className="font-bold text-slate-700">Technician Signature: </span>
-                  <span className="font-mono text-blue-700 font-bold">/s/ {generatedReport.technicianName} ({generatedReport.technicianId})</span>
+                  <span className="font-bold text-ink-700">Technician Signature: </span>
+                  <span className="font-mono text-signal-700 font-bold">/s/ {generatedReport.technicianName} ({generatedReport.technicianId})</span>
                 </div>
                 <div>
-                  <span className="font-bold text-slate-700">Service Duration: </span>
-                  <span className="font-semibold text-slate-900">{generatedReport.durationMinutes} Minutes</span>
+                  <span className="font-bold text-ink-700">Service Duration: </span>
+                  <span className="font-semibold text-ink-900">{generatedReport.durationMinutes} Minutes</span>
                 </div>
               </div>
             </div>
 
-            {/* Bottom Demo Finish Banner */}
-            <div className="rounded-2xl border border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
-              <div>
-                <h4 className="text-sm font-bold text-blue-950">
-                  Diagnosis & Resolution Complete!
-                </h4>
-                <p className="text-xs text-blue-800 mt-0.5">
-                  The service report has been generated and queued for supervisor sign-off in the Supervisor Hub.
-                </p>
+            {/* Completion banner */}
+            <div className="rounded-panel border border-chassis-700 bg-chassis-900 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 no-print">
+              <div className="flex items-start gap-3">
+                <span className="mt-1 h-9 w-[2px] shrink-0 bg-signal-500" aria-hidden="true" />
+                <div>
+                  <h4 className="text-sm font-bold text-deck-50">
+                    Job closed and documented
+                  </h4>
+                  <p className="mt-0.5 text-xs text-deck-50/60">
+                    The service report is queued for supervisor sign-off in the Supervisor Hub.
+                  </p>
+                </div>
               </div>
 
               <button
                 onClick={onViewSupervisor}
-                className="rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white transition hover:bg-blue-700 flex items-center gap-1.5 shrink-0 shadow-xs cursor-pointer"
+                className="rounded-panel bg-signal-500 px-5 py-2.5 text-xs font-bold text-chassis-950 transition hover:bg-signal-400 flex items-center gap-1.5 shrink-0 cursor-pointer active:translate-y-px"
               >
-                <span>Go to Supervisor Dashboard</span>
+                <span>Go to Supervisor Hub</span>
                 <ArrowRight className="h-4 w-4" />
               </button>
             </div>

@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Job, Equipment } from '../types';
 import {
   Wrench,
-  Sparkles,
+  ScanLine,
+  Stethoscope,
   AlertTriangle,
   CheckCircle2,
   Clock,
   MapPin,
   ArrowRight,
   ShieldAlert,
-  Zap,
   Activity,
   Layers,
   Search,
@@ -64,20 +64,20 @@ export const TechnicianDashboard: React.FC<TechnicianDashboardProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#F1F5F9] px-4 py-8 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-deck-100 px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-6">
         {/* Top Header & Welcome */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 pb-5">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-deck-300 pb-5">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-xs font-mono font-semibold text-blue-700 uppercase">TECHNICIAN FIELD DISPATCH // ACTIVE SHIFT</span>
+            <div className="flex items-center gap-2.5">
+              <span className="h-3 w-[2px] bg-signal-500" aria-hidden="true" />
+              <span className="fm-label">Field Dispatch &middot; Active Shift</span>
             </div>
-            <h1 className="mt-1 text-2xl sm:text-3xl font-extrabold text-slate-900">
+            <h1 className="mt-1.5 text-2xl sm:text-3xl font-bold text-ink-900">
               Technician Workspace
             </h1>
-            <p className="text-xs sm:text-sm text-slate-600">
-              Welcome back, <span className="text-slate-900 font-semibold">Alex Mercer (Lead Tech #101)</span> • Campus Facilities Zone
+            <p className="text-xs sm:text-sm text-ink-500">
+              Welcome back, <span className="text-ink-900 font-semibold">Alex Mercer (Lead Tech #101)</span> • Campus Facilities Zone
             </p>
           </div>
 
@@ -86,10 +86,10 @@ export const TechnicianDashboard: React.FC<TechnicianDashboardProps> = ({
             <button
               id="tech-start-diagnosis-main-btn"
               onClick={() => onStartDiagnosis()}
-              className="flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white shadow-sm shadow-blue-500/25 transition hover:bg-blue-700 active:scale-95"
+              className="flex items-center gap-2 rounded-panel bg-signal-500 px-5 py-2.5 text-xs font-bold text-chassis-950 shadow-sm shadow-chassis-900/20 transition hover:bg-signal-400 active:translate-y-px"
             >
-              <Sparkles className="h-4 w-4 text-white" />
-              <span>Start AI Diagnosis</span>
+              <ScanLine className="h-4 w-4" />
+              <span>Start Diagnosis</span>
               <ArrowRight className="h-4 w-4" />
             </button>
           </div>
@@ -97,24 +97,24 @@ export const TechnicianDashboard: React.FC<TechnicianDashboardProps> = ({
 
         {/* Highlight Alert: Featured Urgent Job (HVAC Unit A E04) */}
         {openUrgentIssues.length > 0 && (
-          <div className="relative overflow-hidden rounded-2xl border border-red-200 bg-red-50 p-5 sm:p-6 shadow-xs">
+          <div className="relative overflow-hidden rounded-panel border border-alarm-600/30 bg-alarm-100 p-5 sm:p-6 shadow-xs">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div className="flex items-start gap-3.5">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-red-100 text-red-600 border border-red-200">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-panel bg-alarm-100 text-alarm-600 border border-alarm-600/30">
                   <ShieldAlert className="h-6 w-6" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="rounded-md bg-red-600 px-2 py-0.5 text-[10px] font-bold text-white uppercase">
+                    <span className="rounded-plate bg-alarm-600 px-2 py-0.5 text-[10px] font-bold text-white uppercase">
                       Urgent Priority
                     </span>
-                    <span className="text-xs font-mono font-semibold text-red-700">Error Code: E04</span>
+                    <span className="text-xs font-mono font-semibold text-alarm-700">Error Code: E04</span>
                   </div>
-                  <h3 className="mt-1 text-base sm:text-lg font-bold text-slate-900">
+                  <h3 className="mt-1 text-base sm:text-lg font-bold text-ink-900">
                     {openUrgentIssues[0].title}
                   </h3>
-                  <p className="mt-1 text-xs text-slate-600">
-                    Location: <span className="text-slate-900 font-semibold">{openUrgentIssues[0].location}</span> — {openUrgentIssues[0].notes}
+                  <p className="mt-1 text-xs text-ink-500">
+                    Location: <span className="text-ink-900 font-semibold">{openUrgentIssues[0].location}</span> — {openUrgentIssues[0].notes}
                   </p>
                 </div>
               </div>
@@ -123,10 +123,10 @@ export const TechnicianDashboard: React.FC<TechnicianDashboardProps> = ({
                 <button
                   id="tech-urgent-diagnose-btn"
                   onClick={() => onStartDiagnosis(openUrgentIssues[0].equipmentId, openUrgentIssues[0].errorCode)}
-                  className="flex items-center gap-2 rounded-xl bg-red-600 px-4 py-2.5 text-xs font-bold text-white transition hover:bg-red-700 shadow-sm"
+                  className="flex items-center gap-2 rounded-panel bg-alarm-600 px-4 py-2.5 text-xs font-bold text-white transition hover:bg-alarm-700 shadow-sm"
                 >
-                  <Zap className="h-4 w-4 fill-white text-white" />
-                  <span>Launch AI Diagnosis Flow</span>
+                  <Stethoscope className="h-4 w-4" />
+                  <span>Diagnose This Now</span>
                 </button>
               </div>
             </div>
@@ -135,40 +135,40 @@ export const TechnicianDashboard: React.FC<TechnicianDashboardProps> = ({
 
         {/* 4 Metric Cards */}
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs">
-            <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
+          <div className="rounded-panel border border-deck-300 bg-deck-50 p-4 shadow-xs">
+            <div className="flex items-center justify-between text-ink-500 text-xs font-medium">
               <span>Active Jobs</span>
-              <Wrench className="h-4 w-4 text-blue-600" />
+              <Wrench className="h-4 w-4 text-signal-700" />
             </div>
-            <div className="mt-2 text-2xl sm:text-3xl font-extrabold text-slate-900">{activeJobs.length}</div>
-            <div className="mt-1 text-[11px] text-blue-600 font-medium">In queue or diagnostic state</div>
+            <div className="mt-2 text-2xl sm:text-3xl font-bold text-ink-900">{activeJobs.length}</div>
+            <div className="mt-1 text-[11px] text-signal-700 font-medium">In queue or diagnostic state</div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs">
-            <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
+          <div className="rounded-panel border border-deck-300 bg-deck-50 p-4 shadow-xs">
+            <div className="flex items-center justify-between text-ink-500 text-xs font-medium">
               <span>Completed Jobs</span>
-              <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+              <CheckCircle2 className="h-4 w-4 text-verified-600" />
             </div>
-            <div className="mt-2 text-2xl sm:text-3xl font-extrabold text-slate-900">{completedJobs.length}</div>
-            <div className="mt-1 text-[11px] text-emerald-600 font-medium">Reports filed & verified</div>
+            <div className="mt-2 text-2xl sm:text-3xl font-bold text-ink-900">{completedJobs.length}</div>
+            <div className="mt-1 text-[11px] text-verified-600 font-medium">Reports filed & verified</div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs">
-            <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
+          <div className="rounded-panel border border-deck-300 bg-deck-50 p-4 shadow-xs">
+            <div className="flex items-center justify-between text-ink-500 text-xs font-medium">
               <span>Open Issues</span>
-              <AlertTriangle className="h-4 w-4 text-amber-600" />
+              <AlertTriangle className="h-4 w-4 text-signal-700" />
             </div>
-            <div className="mt-2 text-2xl sm:text-3xl font-extrabold text-slate-900">{openUrgentIssues.length}</div>
-            <div className="mt-1 text-[11px] text-amber-600 font-medium">High/Urgent severity alerts</div>
+            <div className="mt-2 text-2xl sm:text-3xl font-bold text-ink-900">{openUrgentIssues.length}</div>
+            <div className="mt-1 text-[11px] text-signal-700 font-medium">High/Urgent severity alerts</div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs">
-            <div className="flex items-center justify-between text-slate-500 text-xs font-medium">
-              <span>AI-Assisted Jobs</span>
-              <Sparkles className="h-4 w-4 text-indigo-600" />
+          <div className="rounded-panel border border-deck-300 bg-deck-50 p-4 shadow-xs">
+            <div className="flex items-center justify-between text-ink-500 text-xs font-medium">
+              <span>FieldMind Assisted</span>
+              <Stethoscope className="h-4 w-4 text-info-700" />
             </div>
-            <div className="mt-2 text-2xl sm:text-3xl font-extrabold text-slate-900">{aiAssistedRate}%</div>
-            <div className="mt-1 text-[11px] text-indigo-600 font-medium">Grounded in OEM manuals</div>
+            <div className="mt-2 text-2xl sm:text-3xl font-bold text-ink-900">{aiAssistedRate}%</div>
+            <div className="mt-1 text-[11px] text-info-700 font-medium">Grounded in OEM manuals</div>
           </div>
         </div>
 
@@ -177,11 +177,11 @@ export const TechnicianDashboard: React.FC<TechnicianDashboardProps> = ({
           {/* Active / Recent Jobs List (7 Cols) */}
           <div className="space-y-4 lg:col-span-7">
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <Activity className="h-4 w-4 text-blue-600" />
+              <h2 className="text-base font-bold text-ink-900 flex items-center gap-2">
+                <Activity className="h-4 w-4 text-signal-700" />
                 <span>Active & Recent Service Jobs</span>
               </h2>
-              <span className="text-xs text-slate-500 font-medium">{jobs.length} total tasks</span>
+              <span className="text-xs text-ink-500 font-medium">{jobs.length} total tasks</span>
             </div>
 
             <div className="space-y-3">
@@ -192,46 +192,46 @@ export const TechnicianDashboard: React.FC<TechnicianDashboardProps> = ({
                 return (
                   <div
                     key={job.id}
-                    className={`rounded-xl border p-4 transition bg-white shadow-xs ${
+                    className={`rounded-panel border p-4 transition bg-deck-50 shadow-xs ${
                       isUrgent && !isCompleted
-                        ? 'border-red-300 ring-1 ring-red-100 hover:border-red-400'
+                        ? 'border-alarm-600/40 ring-1 ring-alarm-600/20 hover:border-alarm-600/50'
                         : isCompleted
-                        ? 'border-slate-200 opacity-90 hover:border-slate-300'
-                        : 'border-slate-200 hover:border-blue-400'
+                        ? 'border-deck-300 opacity-90 hover:border-deck-300'
+                        : 'border-deck-300 hover:border-signal-500/40'
                     }`}
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                       <div>
                         <div className="flex items-center gap-2">
                           <span
-                            className={`rounded-md px-2 py-0.5 text-[10px] font-bold uppercase ${
+                            className={`rounded-plate px-2 py-0.5 text-[10px] font-bold uppercase ${
                               job.status === 'Completed'
-                                ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                                ? 'bg-verified-100 text-verified-700 border border-verified-600/30'
                                 : job.status === 'In Progress'
-                                ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                                : 'bg-amber-50 text-amber-700 border border-amber-200'
+                                ? 'bg-signal-100 text-signal-700 border border-signal-600/30'
+                                : 'bg-signal-100 text-signal-700 border border-signal-600/30'
                             }`}
                           >
                             {job.status}
                           </span>
 
                           {job.errorCode && (
-                            <span className="rounded-md bg-slate-100 px-2 py-0.5 font-mono text-[10px] font-semibold text-slate-700 border border-slate-200">
+                            <span className="rounded-plate bg-deck-200 px-2 py-0.5 font-mono text-[10px] font-semibold text-ink-700 border border-deck-300">
                               Code: {job.errorCode}
                             </span>
                           )}
 
                           {job.aiAssisted && (
-                            <span className="flex items-center gap-1 text-[11px] text-blue-600 font-medium">
-                              <Sparkles className="h-3 w-3" />
-                              <span>AI Copilot</span>
+                            <span className="flex items-center gap-1 text-[11px] text-signal-700 font-medium">
+                              <Stethoscope className="h-3 w-3" />
+                              <span>FieldMind assisted</span>
                             </span>
                           )}
                         </div>
 
-                        <h4 className="mt-1.5 text-sm font-bold text-slate-900">{job.title}</h4>
-                        <div className="mt-1 flex items-center gap-2 text-xs text-slate-500">
-                          <MapPin className="h-3.5 w-3.5 text-slate-400" />
+                        <h4 className="mt-1.5 text-sm font-bold text-ink-900">{job.title}</h4>
+                        <div className="mt-1 flex items-center gap-2 text-xs text-ink-500">
+                          <MapPin className="h-3.5 w-3.5 text-ink-400" />
                           <span>{job.location}</span>
                           <span>•</span>
                           <span>{job.technicianName}</span>
@@ -243,17 +243,17 @@ export const TechnicianDashboard: React.FC<TechnicianDashboardProps> = ({
                         {isCompleted ? (
                           <button
                             onClick={() => onViewJobReport(job)}
-                            className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-100"
+                            className="rounded-plate border border-deck-300 bg-deck-100 px-3 py-1.5 text-xs font-semibold text-ink-700 transition hover:bg-deck-200"
                           >
                             View Service Report
                           </button>
                         ) : (
                           <button
                             onClick={() => onStartDiagnosis(job.equipmentId, job.errorCode)}
-                            className="flex items-center gap-1.5 rounded-lg bg-blue-50 border border-blue-200 px-3.5 py-1.5 text-xs font-semibold text-blue-700 transition hover:bg-blue-100"
+                            className="flex items-center gap-1.5 rounded-plate bg-signal-100 border border-signal-600/30 px-3.5 py-1.5 text-xs font-semibold text-signal-700 transition hover:bg-signal-100"
                           >
-                            <Sparkles className="h-3.5 w-3.5 text-blue-600" />
-                            <span>Diagnose with AI</span>
+                            <ScanLine className="h-3.5 w-3.5 text-signal-700" />
+                            <span>Diagnose with FieldMind</span>
                           </button>
                         )}
                       </div>
@@ -267,49 +267,49 @@ export const TechnicianDashboard: React.FC<TechnicianDashboardProps> = ({
           {/* Equipment Fleet List (5 Cols) */}
           <div className="space-y-4 lg:col-span-5">
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <Layers className="h-4 w-4 text-blue-600" />
-                <span>Simulated Equipment Fleet</span>
+              <h2 className="text-base font-bold text-ink-900 flex items-center gap-2">
+                <Layers className="h-4 w-4 text-signal-700" />
+                <span>Equipment Fleet</span>
               </h2>
-              <span className="text-xs text-slate-500 font-medium">{equipmentList.length} Units</span>
+              <span className="text-xs text-ink-500 font-medium">{equipmentList.length} Units</span>
             </div>
 
             <div className="space-y-3">
               {equipmentList.map((eq) => (
                 <div
                   key={eq.id}
-                  className="rounded-xl border border-slate-200 bg-white p-3.5 shadow-xs transition hover:border-slate-300"
+                  className="rounded-panel border border-deck-300 bg-deck-50 p-3.5 shadow-xs transition hover:border-deck-300"
                 >
                   <div className="flex items-start gap-3">
                     <img
                       src={eq.imageUrl}
                       alt={eq.name}
-                      className="h-14 w-14 rounded-lg object-cover border border-slate-200 shrink-0"
+                      className="h-14 w-14 rounded-plate object-cover border border-deck-300 shrink-0"
                     />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between">
-                        <h4 className="text-xs font-bold text-slate-900 truncate">{eq.name}</h4>
+                        <h4 className="text-xs font-bold text-ink-900 truncate">{eq.name}</h4>
                         <span
                           className={`rounded px-1.5 py-0.5 text-[10px] font-mono font-bold ${
                             eq.healthScore > 85
-                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                              ? 'bg-verified-100 text-verified-700 border border-verified-600/30'
                               : eq.healthScore > 70
-                              ? 'bg-amber-50 text-amber-700 border border-amber-200'
-                              : 'bg-red-50 text-red-700 border border-red-200'
+                              ? 'bg-signal-100 text-signal-700 border border-signal-600/30'
+                              : 'bg-alarm-100 text-alarm-700 border border-alarm-600/30'
                           }`}
                         >
                           {eq.healthScore}% Health
                         </span>
                       </div>
 
-                      <p className="text-[11px] text-slate-500 truncate mt-0.5">{eq.model} • {eq.tonnage}</p>
-                      <p className="text-[10px] text-slate-400 truncate">{eq.location}</p>
+                      <p className="text-[11px] text-ink-500 truncate mt-0.5">{eq.model} • {eq.tonnage}</p>
+                      <p className="text-[10px] text-ink-400 truncate">{eq.location}</p>
 
-                      <div className="mt-2 flex items-center justify-between border-t border-slate-100 pt-2 text-[10px]">
-                        <span className="text-slate-500">Refrig: <span className="text-slate-700 font-medium">{eq.refrigerant.split(' ')[0]}</span></span>
+                      <div className="mt-2 flex items-center justify-between border-t border-deck-200 pt-2 text-[10px]">
+                        <span className="text-ink-500">Refrig: <span className="text-ink-700 font-medium">{eq.refrigerant.split(' ')[0]}</span></span>
                         <button
                           onClick={() => onStartDiagnosis(eq.id)}
-                          className="text-blue-600 hover:text-blue-800 font-bold flex items-center gap-0.5"
+                          className="text-signal-700 hover:text-signal-700 font-bold flex items-center gap-0.5"
                         >
                           <span>Diagnose</span>
                           <ArrowRight className="h-3 w-3" />
@@ -323,19 +323,20 @@ export const TechnicianDashboard: React.FC<TechnicianDashboardProps> = ({
           </div>
         </div>
 
-        {/* 10 DEMO BENCHMARK TEST CASES & VERIFICATION SUITE */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs space-y-5">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+        {/* FAULT CODE KNOWLEDGE BASE + GROUNDING CHECK */}
+        <div className="rounded-panel border border-deck-300 bg-deck-50 p-6 shadow-xs space-y-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-deck-300 pb-4">
             <div>
-              <div className="flex items-center gap-2 text-xs font-mono font-bold text-blue-700 uppercase">
-                <Sparkles className="h-4 w-4" />
-                <span>Diagnostic Reasoning Pipeline • 10 Test Cases</span>
+              <div className="flex items-center gap-2 text-xs font-mono font-bold text-signal-700 uppercase tracking-wider">
+                <BookOpen className="h-4 w-4" />
+                <span>Knowledge Base &middot; {SIMULATED_ERROR_CODES.length} Fault Codes</span>
               </div>
-              <h2 className="mt-1 text-lg sm:text-xl font-bold text-slate-900">
-                Simulated HVAC Knowledge Base & Reasoning Benchmarks
+              <h2 className="mt-1 text-lg sm:text-xl font-bold text-ink-900">
+                HVAC Fault Code Library
               </h2>
-              <p className="mt-1 text-xs text-slate-600">
-                All 10 benchmark test cases are grounded strictly in the supplied OEM manuals, enforce OSHA safety rules, and never invent specifications.
+              <p className="mt-1 text-xs text-ink-500 max-w-2xl leading-relaxed">
+                Every fault code FieldMind can diagnose today, with the OEM citation and the safety protocol behind
+                it. Nothing here is invented &mdash; if a code is not in the manuals, FieldMind says so instead of guessing.
               </p>
             </div>
 
@@ -344,44 +345,44 @@ export const TechnicianDashboard: React.FC<TechnicianDashboardProps> = ({
                 id="tech-run-10-tests-btn"
                 onClick={handleRunAll10Tests}
                 disabled={isRunningTests}
-                className="flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-bold text-white transition hover:bg-slate-800 disabled:opacity-50 cursor-pointer shadow-xs"
+                className="flex items-center gap-2 rounded-panel bg-chassis-900 px-4 py-2.5 text-xs font-bold text-white transition hover:bg-chassis-800 disabled:opacity-50 cursor-pointer shadow-xs"
               >
                 {isRunningTests ? (
                   <>
-                    <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                    <span>Testing 10 Cases...</span>
+                    <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-deck-50 border-t-transparent" />
+                    <span>Checking grounding&hellip;</span>
                   </>
                 ) : (
                   <>
                     <Play className="h-3.5 w-3.5 fill-white text-white" />
-                    <span>Run All 10 Benchmark Tests</span>
+                    <span>Check every code</span>
                   </>
                 )}
               </button>
             </div>
           </div>
 
-          {/* Test Suite Summary Banner if Executed */}
+          {/* Grounding check summary */}
           {testSuiteResults && (
-            <div className="rounded-xl border border-emerald-300 bg-emerald-50 p-4 text-xs flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0" />
+            <div className="rounded-panel border border-verified-600/40 bg-verified-100 p-4 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-start gap-2.5">
+                <CheckCircle2 className="h-5 w-5 text-verified-600 shrink-0" />
                 <div>
-                  <span className="font-bold text-emerald-950">
-                    Automated Verification Complete: {testSuiteResults.passed} / {testSuiteResults.total} Test Cases Passed
+                  <span className="font-bold text-verified-700">
+                    Grounding check complete &mdash; {testSuiteResults.passed} of {testSuiteResults.total} codes answered from the manuals
                   </span>
-                  <p className="text-[11px] text-emerald-800 mt-0.5">
-                    All 10 structured outputs returned valid schema, safety protocols, citations, and escalation thresholds.
+                  <p className="text-[11px] text-verified-700 mt-0.5">
+                    Each response carried a manual citation, a safety protocol, and an escalation threshold.
                   </p>
                 </div>
               </div>
-              <span className="rounded-md bg-emerald-600 px-2.5 py-1 text-[11px] font-bold text-white">
-                100% Validated
+              <span className="shrink-0 rounded-plate bg-verified-600 px-2.5 py-1 font-mono text-[11px] font-bold text-white">
+                {testSuiteResults.passed}/{testSuiteResults.total}
               </span>
             </div>
           )}
 
-          {/* 10 Error Codes Benchmark Grid */}
+          {/* Fault code cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {SIMULATED_ERROR_CODES.map((err, idx) => {
               const matchingEq = equipmentList[idx % equipmentList.length];
@@ -390,22 +391,22 @@ export const TechnicianDashboard: React.FC<TechnicianDashboardProps> = ({
               return (
                 <div
                   key={err.code}
-                  className="rounded-xl border border-slate-200 bg-[#F8FAFC] p-4 transition hover:border-blue-300 hover:bg-blue-50/20 space-y-3"
+                  className="rounded-panel border border-deck-300 bg-deck-100 p-4 transition hover:border-signal-600/40 hover:bg-signal-100/20 space-y-3"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center gap-2">
-                      <span className="rounded-md bg-red-50 border border-red-200 px-2 py-0.5 font-mono text-xs font-bold text-red-700">
+                      <span className="rounded-plate bg-alarm-100 border border-alarm-600/30 px-2 py-0.5 font-mono text-xs font-bold text-alarm-700">
                         {err.code}
                       </span>
                       <span
                         className={`rounded px-1.5 py-0.5 text-[10px] font-bold uppercase ${
                           err.severity === 'critical'
-                            ? 'bg-red-100 text-red-800'
+                            ? 'bg-alarm-100 text-alarm-700'
                             : err.severity === 'high'
-                            ? 'bg-amber-100 text-amber-800'
+                            ? 'bg-signal-100 text-signal-700'
                             : err.severity === 'medium'
-                            ? 'bg-blue-100 text-blue-800'
-                            : 'bg-emerald-100 text-emerald-800'
+                            ? 'bg-signal-100 text-signal-700'
+                            : 'bg-verified-100 text-verified-700'
                         }`}
                       >
                         {err.severity}
@@ -413,7 +414,7 @@ export const TechnicianDashboard: React.FC<TechnicianDashboardProps> = ({
                     </div>
 
                     {testResult && (
-                      <span className="inline-flex items-center gap-1 rounded-md bg-emerald-100 text-emerald-800 px-2 py-0.5 text-[10px] font-bold">
+                      <span className="inline-flex items-center gap-1 rounded-plate bg-verified-100 text-verified-700 px-2 py-0.5 text-[10px] font-bold">
                         <Check className="h-3 w-3" />
                         <span>Verified ({testResult.confidence}%)</span>
                       </span>
@@ -421,28 +422,28 @@ export const TechnicianDashboard: React.FC<TechnicianDashboardProps> = ({
                   </div>
 
                   <div>
-                    <h4 className="text-xs font-bold text-slate-900">{err.title}</h4>
-                    <p className="mt-1 text-[11px] text-slate-600 line-clamp-2">{err.likelyCause}</p>
+                    <h4 className="text-xs font-bold text-ink-900">{err.title}</h4>
+                    <p className="mt-1 text-[11px] text-ink-500 line-clamp-2">{err.likelyCause}</p>
                   </div>
 
-                  <div className="rounded-lg bg-white border border-slate-200 p-2.5 text-[10px] space-y-1">
-                    <div className="text-slate-500 flex items-center gap-1 font-mono">
-                      <BookOpen className="h-3 w-3 text-blue-600 shrink-0" />
+                  <div className="rounded-plate bg-deck-50 border border-deck-300 p-2.5 text-[10px] space-y-1">
+                    <div className="text-ink-500 flex items-center gap-1 font-mono">
+                      <BookOpen className="h-3 w-3 text-signal-700 shrink-0" />
                       <span className="truncate">Citation: {err.docReference}</span>
                     </div>
-                    <div className="text-amber-800 flex items-start gap-1">
-                      <AlertTriangle className="h-3 w-3 text-amber-600 shrink-0 mt-0.5" />
+                    <div className="text-signal-700 flex items-start gap-1">
+                      <AlertTriangle className="h-3 w-3 text-signal-700 shrink-0 mt-0.5" />
                       <span className="line-clamp-1">{err.safetyWarning}</span>
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between border-t border-slate-200 pt-2 text-xs">
-                    <span className="text-[10px] text-slate-500">
-                      Sample Unit: <span className="text-slate-800 font-semibold">{matchingEq?.model || 'TitanAir'}</span>
+                  <div className="flex items-center justify-between border-t border-deck-300 pt-2 text-xs">
+                    <span className="text-[10px] text-ink-500">
+                      Sample Unit: <span className="text-ink-800 font-semibold">{matchingEq?.model || 'TitanAir'}</span>
                     </span>
                     <button
                       onClick={() => onStartDiagnosis(matchingEq?.id, err.code)}
-                      className="inline-flex items-center gap-1 rounded-lg bg-blue-600 px-3 py-1.5 text-[11px] font-bold text-white hover:bg-blue-700 transition cursor-pointer shadow-xs"
+                      className="inline-flex items-center gap-1 rounded-plate bg-chassis-900 px-3 py-1.5 text-[11px] font-bold text-white hover:bg-chassis-800 transition cursor-pointer shadow-xs"
                     >
                       <span>Diagnose {err.code}</span>
                       <ArrowRight className="h-3 w-3" />

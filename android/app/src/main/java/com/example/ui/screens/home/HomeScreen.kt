@@ -21,8 +21,8 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Assignment
 import androidx.compose.material.icons.filled.Assessment
-import androidx.compose.material.icons.filled.Assignment
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Mic
@@ -228,7 +228,7 @@ fun HomeScreen(
                             onClick = onNavigateToJobs,
                             icon = {
                                 Icon(
-                                    imageVector = Icons.Default.Assignment,
+                                    imageVector = Icons.AutoMirrored.Filled.Assignment,
                                     contentDescription = "Tasks",
                                     tint = CleanTextMuted,
                                     modifier = Modifier.size(20.dp)
@@ -478,7 +478,7 @@ fun HomeScreen(
                     MinimalActionTile(
                         modifier = Modifier.weight(1f),
                         title = "My Jobs",
-                        icon = Icons.Default.Assignment,
+                        icon = Icons.AutoMirrored.Filled.Assignment,
                         containerColor = PastelRedBg,
                         iconColor = PastelRedIcon,
                         onClick = onNavigateToJobs,

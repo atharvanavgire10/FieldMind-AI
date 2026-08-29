@@ -1,6 +1,5 @@
 import express from 'express';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import { createServer as createViteServer } from 'vite';
 import {
@@ -18,9 +17,6 @@ import { INITIAL_JOBS, INITIAL_SERVICE_REPORTS } from './src/data/sampleJobs';
 import { Job, ServiceReport } from './src/types';
 
 dotenv.config();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // In-memory data store for live state changes across Technician and Supervisor views
 let jobsStore: Job[] = JSON.parse(JSON.stringify(INITIAL_JOBS));

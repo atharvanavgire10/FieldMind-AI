@@ -1,16 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  Bot,
   Send,
   X,
-  Sparkles,
   BookOpen,
-  HelpCircle,
   Minimize2,
   Maximize2,
-  Wrench,
-  ShieldCheck,
 } from 'lucide-react';
+import { FieldMindMark } from './BrandMark';
 import { ChatMessage } from '../types';
 
 interface AiChatDrawerProps {
@@ -34,7 +30,7 @@ export const AiChatDrawer: React.FC<AiChatDrawerProps> = ({
     {
       id: 'msg-welcome',
       sender: 'assistant',
-      text: `Hello Alex! I am your **FieldMind AI Copilot**, grounded in the OEM technical documentation and OSHA safety protocols for **HVAC Unit A (TitanAir RTU-10X)** and active alarm **${errorCode}**.\n\nHow can I guide your inspection or procedure right now?`,
+      text: `Hello Alex! I am **FieldMind Assistant**, grounded in the OEM technical documentation and OSHA safety protocols for **HVAC Unit A (TitanAir RTU-10X)** and active alarm **${errorCode}**.\n\nHow can I guide your inspection or procedure right now?`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       sources: ['TitanAir RTU-10X O&M Manual Section 8.4', 'OSHA 1910.147 LOTO Guidelines'],
       suggestedActions: [
@@ -128,25 +124,25 @@ export const AiChatDrawer: React.FC<AiChatDrawerProps> = ({
 
   return (
     <div
-      className={`fixed bottom-4 right-4 z-50 flex flex-col rounded-2xl border border-slate-300 bg-white shadow-2xl transition-all duration-300 overflow-hidden ${
+      className={`fixed bottom-4 right-4 z-50 flex flex-col rounded-panel border border-deck-300 bg-deck-50 shadow-2xl transition-all duration-300 overflow-hidden no-print ${
         isMinimized
           ? 'h-14 w-80'
           : 'h-[580px] w-[95vw] max-w-[420px] sm:w-[420px]'
       }`}
     >
       {/* Header */}
-      <div className="flex h-14 shrink-0 items-center justify-between border-b border-slate-800 bg-slate-900 px-4 text-white">
+      <div className="flex h-14 shrink-0 items-center justify-between border-b border-chassis-700 bg-chassis-900 px-4 text-white">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-blue-600 to-cyan-500 text-white shadow-xs">
-            <Bot className="h-4 w-4" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-plate bg-chassis-800 text-deck-50 ring-1 ring-chassis-600">
+            <FieldMindMark size={18} />
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-xs font-bold text-white">FieldMind AI Copilot</span>
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-xs font-bold text-white">FieldMind Assistant</span>
+              <span className="h-1.5 w-1.5 rounded-full bg-verified-500" />
             </div>
-            <span className="text-[10px] text-cyan-300 font-mono">
-              Grounded // {errorCode} Context
+            <span className="text-[10px] text-deck-50/50 font-mono uppercase tracking-wider">
+              Grounded &middot; {errorCode} context
             </span>
           </div>
         </div>
@@ -154,13 +150,15 @@ export const AiChatDrawer: React.FC<AiChatDrawerProps> = ({
         <div className="flex items-center gap-1">
           <button
             onClick={() => setIsMinimized(!isMinimized)}
-            className="flex h-7 w-7 items-center justify-center rounded-md text-slate-400 hover:bg-slate-800 hover:text-white"
+            aria-label={isMinimized ? 'Expand assistant' : 'Minimize assistant'}
+            className="flex h-7 w-7 items-center justify-center rounded-plate text-deck-50/55 hover:bg-chassis-800 hover:text-white"
           >
             {isMinimized ? <Maximize2 className="h-3.5 w-3.5" /> : <Minimize2 className="h-3.5 w-3.5" />}
           </button>
           <button
             onClick={onClose}
-            className="flex h-7 w-7 items-center justify-center rounded-md text-slate-400 hover:bg-slate-800 hover:text-white"
+            aria-label="Close assistant"
+            className="flex h-7 w-7 items-center justify-center rounded-plate text-deck-50/55 hover:bg-chassis-800 hover:text-white"
           >
             <X className="h-4 w-4" />
           </button>
@@ -170,7 +168,7 @@ export const AiChatDrawer: React.FC<AiChatDrawerProps> = ({
       {!isMinimized && (
         <>
           {/* Messages Body */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 text-xs bg-[#F8FAFC]">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 text-xs bg-deck-100">
             {messages.map((msg) => {
               const isUser = msg.sender === 'user';
               return (
@@ -179,23 +177,23 @@ export const AiChatDrawer: React.FC<AiChatDrawerProps> = ({
                   className={`flex flex-col ${isUser ? 'items-end' : 'items-start'}`}
                 >
                   <div
-                    className={`max-w-[88%] rounded-2xl p-3.5 leading-relaxed shadow-xs ${
+                    className={`max-w-[88%] rounded-panel p-3.5 leading-relaxed shadow-xs ${
                       isUser
-                        ? 'bg-blue-600 text-white rounded-br-xs'
-                        : 'bg-white border border-slate-200 text-slate-800 rounded-bl-xs'
+                        ? 'bg-chassis-900 text-white rounded-br-xs'
+                        : 'bg-deck-50 border border-deck-300 text-ink-800 rounded-bl-xs'
                     }`}
                   >
                     <div className="whitespace-pre-wrap">{msg.text}</div>
 
                     {/* Sources Citation Pill */}
                     {msg.sources && msg.sources.length > 0 && (
-                      <div className="mt-2.5 border-t border-slate-100 pt-2 text-[10px] text-blue-700 font-medium flex items-start gap-1">
+                      <div className="mt-2.5 border-t border-deck-200 pt-2 text-[10px] text-signal-700 font-medium flex items-start gap-1">
                         <BookOpen className="h-3 w-3 shrink-0 mt-0.5" />
                         <span className="italic">Grounded: {msg.sources.join(' • ')}</span>
                       </div>
                     )}
                   </div>
-                  <span className="mt-1 px-1 text-[9px] text-slate-400">{msg.timestamp}</span>
+                  <span className="mt-1 px-1 text-[9px] text-ink-400">{msg.timestamp}</span>
 
                   {/* Suggested Follow-up Chips */}
                   {msg.suggestedActions && (
@@ -204,7 +202,7 @@ export const AiChatDrawer: React.FC<AiChatDrawerProps> = ({
                         <button
                           key={i}
                           onClick={() => handleSendMessage(action)}
-                          className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[10px] font-semibold text-blue-700 hover:border-blue-300 hover:bg-blue-50 transition shadow-xs"
+                          className="rounded-full border border-deck-300 bg-deck-50 px-2.5 py-1 text-[10px] font-semibold text-signal-700 hover:border-signal-600/40 hover:bg-signal-100 transition shadow-xs"
                         >
                           {action}
                         </button>
@@ -216,39 +214,39 @@ export const AiChatDrawer: React.FC<AiChatDrawerProps> = ({
             })}
 
             {isLoading && (
-              <div className="flex items-center gap-2 text-xs text-blue-600 font-medium">
-                <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-blue-600 border-t-transparent" />
-                <span>FieldMind AI synthesizing technician reasoning...</span>
+              <div className="flex items-center gap-2 text-xs text-signal-700 font-medium">
+                <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-signal-500 border-t-transparent" />
+                <span>Checking the manual for this alarm&hellip;</span>
               </div>
             )}
             <div ref={messagesEndRef} />
           </div>
 
           {/* Quick Prompt Bar */}
-          <div className="border-t border-slate-200 bg-slate-50 p-2 overflow-x-auto flex gap-1.5 scrollbar-none">
+          <div className="border-t border-deck-300 bg-deck-100 p-2 overflow-x-auto flex gap-1.5 scrollbar-none">
             <button
               onClick={() => handleSendMessage('What should I check first?')}
-              className="shrink-0 rounded-md bg-white border border-slate-200 px-2 py-1 text-[10px] font-medium text-slate-700 hover:text-blue-700 hover:border-blue-200 shadow-xs"
+              className="shrink-0 rounded-plate bg-deck-50 border border-deck-300 px-2 py-1 text-[10px] font-medium text-ink-700 hover:text-signal-700 hover:border-signal-600/30 shadow-xs"
             >
-              "What should I check first?"
+              What should I check first?
             </button>
             <button
               onClick={() => handleSendMessage('Why did this error occur?')}
-              className="shrink-0 rounded-md bg-white border border-slate-200 px-2 py-1 text-[10px] font-medium text-slate-700 hover:text-blue-700 hover:border-blue-200 shadow-xs"
+              className="shrink-0 rounded-plate bg-deck-50 border border-deck-300 px-2 py-1 text-[10px] font-medium text-ink-700 hover:text-signal-700 hover:border-signal-600/30 shadow-xs"
             >
-              "Why did this error occur?"
+              Why did this error occur?
             </button>
             <button
               onClick={() => handleSendMessage('Show me the maintenance procedure.')}
-              className="shrink-0 rounded-md bg-white border border-slate-200 px-2 py-1 text-[10px] font-medium text-slate-700 hover:text-blue-700 hover:border-blue-200 shadow-xs"
+              className="shrink-0 rounded-plate bg-deck-50 border border-deck-300 px-2 py-1 text-[10px] font-medium text-ink-700 hover:text-signal-700 hover:border-signal-600/30 shadow-xs"
             >
-              "Show procedure"
+              Show procedure
             </button>
             <button
               onClick={() => handleSendMessage('Summarize this job.')}
-              className="shrink-0 rounded-md bg-white border border-slate-200 px-2 py-1 text-[10px] font-medium text-slate-700 hover:text-blue-700 hover:border-blue-200 shadow-xs"
+              className="shrink-0 rounded-plate bg-deck-50 border border-deck-300 px-2 py-1 text-[10px] font-medium text-ink-700 hover:text-signal-700 hover:border-signal-600/30 shadow-xs"
             >
-              "Summarize job"
+              Summarize job
             </button>
           </div>
 
@@ -258,19 +256,20 @@ export const AiChatDrawer: React.FC<AiChatDrawerProps> = ({
               e.preventDefault();
               handleSendMessage();
             }}
-            className="flex items-center gap-2 border-t border-slate-200 p-3 bg-white"
+            className="flex items-center gap-2 border-t border-deck-300 p-3 bg-deck-50"
           >
             <input
               type="text"
               value={inputQuery}
               onChange={(e) => setInputQuery(e.target.value)}
-              placeholder="Ask technician question..."
-              className="flex-1 rounded-xl border border-slate-300 bg-white px-3.5 py-2 text-xs text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+              placeholder="Ask FieldMind about this job..."
+              className="flex-1 rounded-panel border border-deck-300 bg-deck-50 px-3.5 py-2 text-xs text-ink-900 placeholder-ink-400 focus:border-signal-500 focus:ring-1 focus:ring-signal-500 focus:outline-none"
             />
             <button
               type="submit"
               disabled={!inputQuery.trim() || isLoading}
-              className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-600 text-white transition hover:bg-blue-700 disabled:opacity-50 shadow-xs"
+              aria-label="Send question"
+              className="flex h-8 w-8 items-center justify-center rounded-panel bg-signal-500 text-chassis-950 transition hover:bg-signal-400 disabled:opacity-45 shadow-xs"
             >
               <Send className="h-3.5 w-3.5" />
             </button>

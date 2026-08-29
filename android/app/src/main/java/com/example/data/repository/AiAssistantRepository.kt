@@ -334,7 +334,7 @@ class AiAssistantRepository(
 
         return ChatMessage(
             sender = MessageSender.AI_ASSISTANT,
-            text = "[FieldMind AI Cloud - Gemini]\n\n" + text.trim(),
+            text = "[FieldMind AI Cloud]\n\n" + text.trim(),
             isSafetyAlert = prompt.lowercase().contains("safety") || text.contains("WARNING") || text.contains("HAZARD"),
             suggestions = listOf("What should I check next?", "Explain this procedure", "Safety precautions")
         )

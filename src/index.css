@@ -1,23 +1,203 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   FieldMind AI — Design Tokens
+   Aesthetic: field-operations instrumentation. Dark graphite chrome for
+   navigation / system surfaces, light "work deck" for content, one hi-vis
+   amber signal colour reserved for actionable + in-progress states.
+   ========================================================================== */
+@theme {
+  /* Chrome — dark graphite structural surfaces */
+  --color-chassis-950: #0D1014;
+  --color-chassis-900: #12161A;
+  --color-chassis-800: #191E24;
+  --color-chassis-700: #232A31;
+  --color-chassis-600: #2E363F;
+  --color-chassis-500: #3D4650;
+
+  /* Deck — light work surfaces */
+  --color-deck-50: #FFFFFF;
+  --color-deck-100: #F5F6F8;
+  --color-deck-200: #ECEEF1;
+  --color-deck-300: #DDE1E6;
+  --color-deck-400: #C4CAD1;
+
+  /* Ink */
+  --color-ink-900: #12161A;
+  --color-ink-800: #232A31;
+  --color-ink-700: #39424C;
+  --color-ink-500: #5C6673;
+  --color-ink-400: #69737F;
+
+  /* Signal — hi-vis amber. Reserved for primary action + active work. */
+  --color-signal-700: #A9651A;
+  --color-signal-600: #C97F22;
+  --color-signal-500: #E8A13A;
+  --color-signal-400: #F2B85F;
+  --color-signal-100: #FBEDD7;
+
+  /* Semantic instrumentation colours */
+  --color-alarm-700: #98261C;
+  --color-alarm-600: #BC3225;
+  --color-alarm-500: #D9503F;
+  --color-alarm-100: #FAE7E4;
+
+  --color-verified-700: #235340;
+  --color-verified-600: #2E6B4E;
+  --color-verified-500: #3D8862;
+  --color-verified-100: #E3EFE8;
+
+  --color-info-700: #1F4B63;
+  --color-info-600: #2A6483;
+  --color-info-100: #E4EEF3;
+
+  /* Type — condensed industrial signage for display, system UI for body */
+  --font-display: "Bahnschrift SemiCondensed", "Bahnschrift", "DIN Alternate",
+    "Avenir Next Condensed", "Archivo Narrow", "Roboto Condensed",
+    "Liberation Sans Narrow", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Segoe UI Variable Text", "Segoe UI", ui-sans-serif, system-ui,
+    -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Cascadia Mono", "Cascadia Code", ui-monospace, "SF Mono",
+    Consolas, "Liberation Mono", monospace;
+
+  /* Geometry — tight machined radii, not pill-shaped SaaS */
+  --radius-plate: 3px;
+  --radius-panel: 5px;
+}
+
 @layer base {
   body {
-    @apply bg-[#F1F5F9] text-slate-800 antialiased selection:bg-blue-500/20 selection:text-blue-900;
+    background-color: var(--color-deck-100);
+    color: var(--color-ink-900);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-signal-500) 30%, transparent);
+  }
+
+  /* Visible, consistent keyboard focus across every control */
+  :focus-visible {
+    outline: 2px solid var(--color-signal-500);
+    outline-offset: 2px;
+  }
+
+  /* Numeric data should align in columns everywhere it appears */
+  code,
+  kbd,
+  samp,
+  .font-mono {
+    font-variant-numeric: tabular-nums;
   }
 }
 
+/* ==========================================================================
+   Signature motif: the "data plate" — a stamped equipment nameplate.
+   Small caps mono labels over hairline-separated value rows, with a short
+   amber index tick marking the active row.
+   ========================================================================== */
+
+/* Mono micro-label used for every field label in the product */
+.fm-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.2;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--color-ink-400);
+}
+
+.fm-label-dark {
+  color: color-mix(in srgb, var(--color-deck-50) 52%, transparent);
+}
+
+/* Condensed display heading */
+.fm-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+}
+
+/* The amber index tick — a 2px vertical bar. Used to mark the active
+   item in a stack. This is the repeated brand gesture. */
+.fm-tick {
+  position: relative;
+}
+.fm-tick::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 14px;
+  width: 2px;
+  transform: translateY(-50%);
+  background-color: var(--color-signal-500);
+}
+
+/* Etched panel edge for dark chrome surfaces */
+.fm-etch {
+  box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 0.05);
+}
+
+/* Machined grid texture — used once, behind the hero, at very low contrast */
+.fm-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Hero entrance — one orchestrated reveal on first paint, nothing else */
+@keyframes fm-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.fm-reveal {
+  animation: fm-rise 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fm-reveal {
+    animation: none;
+  }
+  .animate-ping,
+  .animate-pulse,
+  .animate-bounce {
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   Print — service report output. These rules are load-bearing for the
+   "Download / Print report" flow and must not be removed.
+   ========================================================================== */
 @media print {
   body {
-    background: white !important;
-    color: black !important;
+    background: #ffffff !important;
   }
+
   .no-print {
     display: none !important;
   }
+
   .print-only {
     display: block !important;
   }
+
+  /* Flatten interactive chrome into clean document ink */
+  .fm-plate,
+  .fm-doc {
+    box-shadow: none !important;
+    border-color: #b7bcc2 !important;
+  }
 }
-
-

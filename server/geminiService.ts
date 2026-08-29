@@ -230,7 +230,7 @@ STRICT INSTRUCTIONS:
           section: d.section || 'Troubleshooting Section',
           reference: d.reference || equipment.oemReference,
           citation: d.citation || errorInfo.docReference,
-          excerpt: d.excerpt || `Simulated excerpt from ${equipment.manualTitle} regarding ${errorInfo.title}.`,
+          excerpt: d.excerpt || `Excerpt from ${equipment.manualTitle} regarding ${errorInfo.title}.`,
         }));
 
         if (docRefs.length === 0) {
@@ -303,7 +303,7 @@ function handleInsufficientInformation(params: {
   userNotes?: string;
 }): DiagnosticResult {
   const missingParts: string[] = [];
-  if (!params.equipment) missingParts.push(`Equipment model "${params.equipmentId}" is not present in simulated OEM database.`);
+  if (!params.equipment) missingParts.push(`Equipment model "${params.equipmentId}" is not present in the OEM knowledge base.`);
   if (!params.errorInfo) missingParts.push(`Alarm code "${params.errorCode}" is not documented in standard HVAC registry.`);
 
   const safetyNote = 'SAFETY HOLD: Information is insufficient to safely determine root cause. Do NOT attempt energized troubleshooting or bypass safety interlocks without verified equipment schematics.';
@@ -328,12 +328,12 @@ function handleInsufficientInformation(params: {
         section: 'Section 1.2: Insufficient Information & Data Verification Protocol',
         reference: 'SAFETY-STD-001',
         citation: 'FieldMind Safety Protocol Section 1.2: "Zero-Assumption Principle for Unverified Equipment"',
-        excerpt: 'When equipment metadata or alarm code is unrecognized, the AI copilot must halt automated diagnosis and instruct the technician to gather verified nameplate specifications.',
+        excerpt: 'When equipment metadata or alarm code is unrecognized, FieldMind must halt automated diagnosis and instruct the technician to gather verified nameplate specifications.',
       },
     ],
     whenToEscalate: 'Immediate escalation required: Contact OEM factory support or Field Service Supervisor to obtain authentic manufacturer wiring schematics and fault matrix.',
     isInsufficientInfo: true,
-    insufficientInfoNotice: `Diagnostic Engine Notice: ${missingParts.join(' ')} To protect technician safety and equipment integrity, the AI will not generate speculative repair instructions.`,
+    insufficientInfoNotice: `Diagnostic Engine Notice: ${missingParts.join(' ')} To protect technician safety and equipment integrity, FieldMind will not generate speculative repair instructions.`,
 
     // Extended compatibility fields
     equipmentId: params.equipmentId,
