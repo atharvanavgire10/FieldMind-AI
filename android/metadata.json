@@ -1,0 +1,6 @@
+{
+  "name": "FieldMind AI",
+  "description": "Technician-facing mobile AI companion for field operations and equipment diagnostics",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
