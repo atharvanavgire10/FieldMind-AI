@@ -18,50 +18,52 @@ import { Job, ServiceReport } from './src/types';
 
 dotenv.config();
 
-// In-memory data store for live state changes across Technician and Supervisor views
+// In-memory data store
 let jobsStore: Job[] = JSON.parse(JSON.stringify(INITIAL_JOBS));
 let reportsStore: ServiceReport[] = JSON.parse(JSON.stringify(INITIAL_SERVICE_REPORTS));
 
-async function startServer() {
+export async function createApp() {
   const app = express();
-  const PORT = 3000;
 
   app.use(express.json({ limit: '25mb' }));
   app.use(express.urlencoded({ extended: true, limit: '25mb' }));
 
-  // --- API Routes ---
+  // =========================
+  // API ROUTES
+  // =========================
 
-  // Health check
   app.get('/api/health', (req, res) => {
     res.json({
       status: 'ok',
       service: 'FieldMind AI Server',
-      geminiConnected: !!(process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY !== 'MY_GEMINI_API_KEY'),
+      geminiConnected: !!(
+        process.env.GEMINI_API_KEY &&
+        process.env.GEMINI_API_KEY !== 'MY_GEMINI_API_KEY'
+      ),
       time: new Date().toISOString(),
     });
   });
 
-  // Knowledge Base: Equipment
   app.get('/api/equipment', (req, res) => {
     res.json(SIMULATED_EQUIPMENT);
   });
 
-  // Knowledge Base: Error Codes
   app.get('/api/error-codes', (req, res) => {
     res.json(SIMULATED_ERROR_CODES);
   });
 
-  // Knowledge Base: Demo Sample Photos
   app.get('/api/sample-photos', (req, res) => {
     res.json(DEMO_SAMPLE_PHOTOS);
   });
 
-  // Jobs: List
+  // =========================
+  // JOBS
+  // =========================
+
   app.get('/api/jobs', (req, res) => {
     res.json(jobsStore);
   });
 
-  // Jobs: Create
   app.post('/api/jobs', (req, res) => {
     const newJob: Job = {
       id: `job-${Date.now().toString().slice(-4)}`,
@@ -78,32 +80,38 @@ async function startServer() {
       notes: req.body.notes || '',
       diagnosticResult: req.body.diagnosticResult,
     };
+
     jobsStore.unshift(newJob);
     res.status(201).json(newJob);
   });
 
-  // Jobs: Update
   app.put('/api/jobs/:id', (req, res) => {
     const { id } = req.params;
     const index = jobsStore.findIndex((j) => j.id === id);
+
     if (index === -1) {
       return res.status(404).json({ error: 'Job not found' });
     }
+
     jobsStore[index] = {
       ...jobsStore[index],
       ...req.body,
     };
+
     res.json(jobsStore[index]);
   });
 
-  // Reports: List
+  // =========================
+  // REPORTS
+  // =========================
+
   app.get('/api/reports', (req, res) => {
     res.json(reportsStore);
   });
 
-  // Reports: Save / Submit
   app.post('/api/reports', (req, res) => {
     const reportData = req.body;
+
     const newReport: ServiceReport = {
       id: reportData.id || `rep-${Date.now().toString().slice(-4)}`,
       jobId: reportData.jobId || `job-${Date.now().toString().slice(-4)}`,
@@ -132,9 +140,9 @@ async function startServer() {
 
     reportsStore.unshift(newReport);
 
-    // Also update associated job if it exists
     if (newReport.jobId) {
       const jobIdx = jobsStore.findIndex((j) => j.id === newReport.jobId);
+
       if (jobIdx !== -1) {
         jobsStore[jobIdx].status = 'Completed';
         jobsStore[jobIdx].completedAt = newReport.timestamp;
@@ -146,7 +154,10 @@ async function startServer() {
     res.status(201).json(newReport);
   });
 
-  // AI Endpoint: Diagnose Equipment & Error with Structured Pipeline
+  // =========================
+  // AI DIAGNOSIS
+  // =========================
+
   app.post('/api/diagnose', async (req, res) => {
     try {
       const {
@@ -162,10 +173,15 @@ async function startServer() {
       } = req.body;
 
       if (!equipmentId && !equipmentType) {
-        return res.status(400).json({ error: 'equipmentId or equipmentType is required' });
+        return res.status(400).json({
+          error: 'equipmentId or equipmentType is required',
+        });
       }
+
       if (!errorCode) {
-        return res.status(400).json({ error: 'errorCode is required' });
+        return res.status(400).json({
+          error: 'errorCode is required',
+        });
       }
 
       const diagnosis = await runEquipmentDiagnosis({
@@ -179,31 +195,54 @@ async function startServer() {
         safetyConstraints,
         photoUrl,
       });
+
       res.json(diagnosis);
     } catch (err: any) {
       console.error('Error in /api/diagnose:', err);
-      res.status(500).json({ error: err.message || 'Internal AI diagnosis error' });
+
+      res.status(500).json({
+        error: err.message || 'Internal AI diagnosis error',
+      });
     }
   });
 
-  // Verification Endpoint: Run 10 Demo Diagnostic Test Cases
+  // =========================
+  // DIAGNOSTIC TEST
+  // =========================
+
   app.get('/api/test-diagnostic-pipeline', async (req, res) => {
     try {
       const results = await testAll10DiagnosticCases();
       res.json(results);
     } catch (err: any) {
       console.error('Error in /api/test-diagnostic-pipeline:', err);
-      res.status(500).json({ error: err.message || 'Internal test suite error' });
+
+      res.status(500).json({
+        error: err.message || 'Internal test suite error',
+      });
     }
   });
 
-  // AI Endpoint: Interactive Copilot Chat
+  // =========================
+  // AI CHAT
+  // =========================
+
   app.post('/api/chat', async (req, res) => {
     try {
-      const { question, equipmentId, errorCode, currentStepIndex, history } = req.body;
+      const {
+        question,
+        equipmentId,
+        errorCode,
+        currentStepIndex,
+        history,
+      } = req.body;
+
       if (!question) {
-        return res.status(400).json({ error: 'question is required' });
+        return res.status(400).json({
+          error: 'question is required',
+        });
       }
+
       const response = await askAiCopilot({
         question,
         equipmentId,
@@ -211,14 +250,21 @@ async function startServer() {
         currentStepIndex,
         history,
       });
+
       res.json(response);
     } catch (err: any) {
       console.error('Error in /api/chat:', err);
-      res.status(500).json({ error: err.message || 'Internal AI chat error' });
+
+      res.status(500).json({
+        error: err.message || 'Internal AI chat error',
+      });
     }
   });
 
-  // AI Endpoint: Automated Service Report Generator
+  // =========================
+  // SERVICE REPORT AI
+  // =========================
+
   app.post('/api/generate-report', async (req, res) => {
     try {
       const {
@@ -240,40 +286,79 @@ async function startServer() {
         durationMinutes,
         technicianName,
       });
+
       res.json(generated);
     } catch (err: any) {
       console.error('Error in /api/generate-report:', err);
-      res.status(500).json({ error: err.message || 'Internal report generation error' });
+
+      res.status(500).json({
+        error: err.message || 'Internal report generation error',
+      });
     }
   });
 
-  // Reset Demo to pristine state
+  // =========================
+  // RESET DEMO
+  // =========================
+
   app.post('/api/reset-demo', (req, res) => {
     jobsStore = JSON.parse(JSON.stringify(INITIAL_JOBS));
     reportsStore = JSON.parse(JSON.stringify(INITIAL_SERVICE_REPORTS));
-    res.json({ status: 'reset_success', jobsCount: jobsStore.length, reportsCount: reportsStore.length });
+
+    res.json({
+      status: 'reset_success',
+      jobsCount: jobsStore.length,
+      reportsCount: reportsStore.length,
+    });
   });
 
-  // --- Vite Middleware / Static Files ---
-  if (process.env.NODE_ENV !== 'production') {
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: 'spa',
-    });
-    app.use(vite.middlewares);
-  } else {
+  // =========================
+  // PRODUCTION FRONTEND
+  // =========================
+
+  if (process.env.NODE_ENV === 'production') {
     const distPath = path.join(process.cwd(), 'dist');
+
     app.use(express.static(distPath));
+
     app.get('*', (req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }
 
+  return app;
+}
+
+// =========================
+// LOCAL DEVELOPMENT SERVER
+// =========================
+
+async function startServer() {
+  const app = await createApp();
+
+  if (process.env.NODE_ENV !== 'production') {
+    const vite = await createViteServer({
+      server: {
+        middlewareMode: true,
+      },
+      appType: 'spa',
+    });
+
+    app.use(vite.middlewares);
+  }
+
+  const PORT = Number(process.env.PORT) || 3000;
+
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`FieldMind AI Server running on http://0.0.0.0:${PORT}`);
+    console.log(
+      `FieldMind AI Server running on http://0.0.0.0:${PORT}`
+    );
   });
 }
 
-startServer().catch((err) => {
-  console.error('Failed to start server:', err);
-});
+// Only start a local server when this file is executed directly.
+if (process.env.NODE_ENV !== 'production') {
+  startServer().catch((err) => {
+    console.error('Failed to start server:', err);
+  });
+}
