@@ -1,511 +1,363 @@
 # FieldMind AI
 
-> AI help for people who fix things.
+> **AI help for people who fix things.**
 
-FieldMind AI is an AI copilot for field workers who diagnose, repair, maintain, and service physical equipment on-site.
+FieldMind AI is an on-site AI copilot for field workers who diagnose, repair, maintain, and service physical equipment.
 
-When a technician arrives at a job site to fix a broken machine, they often face complex mechanical or electrical faults. Finding the exact repair procedure usually requires searching through hundreds of pages of equipment manuals, looking up cryptic fault codes, or calling a senior technician for guidance.
+```
+Problem ──▶ Capture ──▶ Understand ──▶ Find ──▶ Diagnose ──▶ Guide ──▶ Verify ──▶ Report
+```
 
-FieldMind brings technical intelligence directly into the field worker's hands. By capturing equipment details, photos, or error codes, the worker receives structured AI diagnosis, step-by-step repair checklists, and automatic service report generation—enabling faster, safer, and higher-quality field repairs.
-
----
-
-## 1. The Problem
-
-A machine or critical piece of equipment fails on-site.
-
-The field worker has to figure out what is wrong, identify the root cause, and complete the repair safely and efficiently. Today, the information needed to solve the problem is fragmented across:
-
-- Lengthy 200+ page manufacturer PDF manuals that are hard to navigate on mobile devices.
-- Unclear alphanumeric error and alarm codes that differ by model, manufacturer, and firmware revision.
-- Worn, unreadable equipment nameplates and complex wiring schematics.
-- Past maintenance notes and service histories locked in separate back-office databases.
-- Unwritten technician experience and specialized tribal knowledge.
-
-Searching for the right answer takes time. The field worker is standing beside the machine and needs immediate, accurate, and actionable guidance without delay.
+When critical machinery breaks down, technicians often have to flip through 200+ page manuals, decode cryptic error codes, or wait for senior phone support. FieldMind puts technical intelligence directly into the technician's pocket—guiding them from visual symptom capture to step-by-step repair and automated service documentation.
 
 ---
 
-## 2. The Solution
+## The Problem
 
-FieldMind AI is an AI copilot that stays with the field worker throughout the entire service job.
+Field technicians stand directly in front of malfunctioning equipment under tight deadlines. Finding the right fix is slow and fragmented:
 
-Instead of acting as a generic question-and-answer chatbot, FieldMind supports the full operational workflow:
+- **Buried Knowledge**: Crucial troubleshooting procedures are hidden inside dense PDF manuals.
+- **Cryptic Alarms**: Alphanumeric error codes vary across models, revisions, and manufacturers.
+- **Worn Identification**: Damaged nameplates and complex wiring diagrams slow down identification.
+- **Disconnected Records**: Past service history and technician notes are locked away in back-office systems.
 
-$$\text{Show the Problem} \longrightarrow \text{Understand Context} \longrightarrow \text{Find Knowledge} \longrightarrow \text{Diagnose} \longrightarrow \text{Guide} \longrightarrow \text{Verify} \longrightarrow \text{Report}$$
-
-FieldMind helps a field worker go from a physical equipment problem to a completed service job.
-
----
-
-## 3. How FieldMind Works
-
-### Step 1 — Capture
-The field worker captures the problem on-site using the available application inputs:
-- Equipment model selection or nameplate inspection.
-- Fault or alarm codes (e.g., `E01` through `E10`).
-- Component photos (e.g., damaged compressor terminals, clogged condenser coils, loose drive belts).
-- Natural language symptom descriptions and observations.
-- Voice query input (supported in the Android application).
-
-### Step 2 — Understand
-FieldMind processes the visual symptoms, error code, unit specifications, and technician notes to understand the exact operating context of the machine.
-
-### Step 3 — Find
-FieldMind searches its technical knowledge base and equipment documentation to retrieve manufacturer specifications, fault code tables, and safety warnings.
-
-### Step 4 — Diagnose
-FieldMind evaluates the symptoms against known failure modes, determines the most probable root cause, computes a diagnostic confidence score, and checks for critical safety hazards (such as OSHA Lock-Out / Tag-Out requirements).
-
-### Step 5 — Guide
-FieldMind provides structured, sequential repair steps. Each step details the required physical action, essential tools (e.g., True-RMS Multimeter, digital manifold gauges), and specific manufacturer manual citations.
-
-### Step 6 — Verify
-The field worker reviews and verifies the recommendations.
-
-> **Safety Standard**: AI assists. The trained worker remains responsible for the physical work, safety protocols, and final repair decisions.
-
-### Step 7 — Report
-FieldMind synthesizes completed repair steps, measured operating telemetry (e.g., Delta-T, motor amp draw, refrigerant subcooling), replaced parts, and technician notes into a standardized commercial service report ready for supervisor review and PDF export.
-
-### Step 8 — Offline / Limited Connectivity
-FieldMind provides deterministic local knowledge fallbacks and safety guardrails when offline. When cloud connectivity is unavailable, the application serves verified baseline procedures from local data and enforces safety holds if data is insufficient.
+Searching for answers takes valuable time while critical equipment remains offline.
 
 ---
 
-## 4. Complete Workflow
+## The Solution
+
+**FieldMind puts an AI copilot in the field worker's pocket.**
+
+FieldMind is not just a question-and-answer chatbot—it is an end-to-end operational copilot built for physical field service:
+
+- **Captures** equipment symptoms via photos, fault codes, model selectors, and voice input.
+- **Grounds** diagnostic reasoning in verified manufacturer manuals, fault trees, and safety specifications.
+- **Guides** technicians through structured, sequential repair checklists with required tools.
+- **Enforces Safety** with mandatory Lock-Out / Tag-Out (LOTO) alerts and zero-assumption guardrails.
+- **Generates** commercial service reports automatically upon job completion.
+
+> *FieldMind helps a field worker go from a physical equipment problem to a completed service job.*
+
+---
+
+## How FieldMind Works
 
 ```
        ┌────────────────────────┐
-       │        PROBLEM         │
+       │        PROBLEM         │  Equipment fails on-site
        └───────────┬────────────┘
+                   │
                    ▼
        ┌────────────────────────┐
-       │        CAPTURE         │  • Photo, Error Code, Model, Voice
+       │        CAPTURE         │  Photo, Model, Alarm Code, Voice, or Notes
        └───────────┬────────────┘
+                   │
                    ▼
        ┌────────────────────────┐
-       │       UNDERSTAND       │  • Operating Context & Symptom Analysis
+       │       UNDERSTAND       │  Synthesizes operating context & symptoms
        └───────────┬────────────┘
+                   │
                    ▼
        ┌────────────────────────┐
-       │          FIND          │  • Technical Manuals & Fault Matrices
+       │          FIND          │  Retrieves OEM specs, wiring data & fault matrices
        └───────────┬────────────┘
+                   │
                    ▼
        ┌────────────────────────┐
-       │        DIAGNOSE        │  • Probable Root Cause & Safety Alerts
+       │        DIAGNOSE        │  AI reasoning determines root cause & confidence
        └───────────┬────────────┘
+                   │
                    ▼
        ┌────────────────────────┐
-       │         GUIDE          │  • Step-by-Step Actions & Tool List
+       │         GUIDE          │  Actionable repair checklist with required tools
        └───────────┬────────────┘
+                   │
                    ▼
        ┌────────────────────────┐
-       │         VERIFY         │  • Physical Checks & Telemetry Readings
+       │         VERIFY         │  Technician confirms readings (Delta-T, Amps, PSI)
        └───────────┬────────────┘
+                   │
                    ▼
        ┌────────────────────────┐
-       │         REPORT         │  • Structured Ticket & PDF Generation
+       │         REPORT         │  Auto-generates signed service ticket & PDF
        └───────────┬────────────┘
+                   │
                    ▼
 ┌──────────────────────────────────────┐
-│  SYNC / CONTINUE OFFLINE (WHERE SUPPORTED) │
+│  OFFLINE WORKFLOW & LOCAL RECOVERY   │  Local knowledge fallback when disconnected
 └──────────────────────────────────────┘
 ```
 
-> **From a broken machine to a completed service job.**
+### 1. Capture
+The worker captures the issue on-site using the mobile app or web workspace: select the machine model, snap a component photo, pick an alarm code (e.g., `E04`), or describe symptoms via voice/text.
+
+### 2. Understand
+FieldMind correlates the visual inspection, alarm code, unit specifications, and technician observations to establish full equipment context.
+
+### 3. Find
+The system retrieves relevant technical specifications, fault tables, and safety warnings from its equipment knowledge base.
+
+### 4. Diagnose
+The AI reasoning engine evaluates symptoms against known failure modes, computes a diagnostic confidence score, pinpoints probable root causes, and issues OSHA safety alerts.
+
+### 5. Guide
+FieldMind presents an actionable, step-by-step repair procedure detailing required physical tasks, cited manual sections, and needed tools (e.g., True-RMS Multimeter, digital manifold gauges).
+
+### 6. Verify
+The technician performs physical checks, measures operating telemetry, and confirms safe operation.
+> *AI assists. The trained worker remains responsible for physical work, safety protocols, and final repair decisions.*
+
+### 7. Report
+With one click, FieldMind synthesizes completed checklist steps, verified telemetry readings, replaced parts, and technician notes into a standardized commercial service ticket.
 
 ---
 
-## 5. Key Features
+## Why FieldMind?
 
-- **AI Equipment Diagnosis**: Server-side diagnostic engine powered by Gemini 3.7 Flash using JSON Schema mode to generate root cause analysis, confidence ratings, and safety warnings.
-- **Multimodal & Image Analysis**: Photo upload and optical symptom inspection with sample failure state presets (e.g., coil blockages, terminal burns, belt wear).
-- **Error-Code Diagnosis**: Rapid lookup and fault tree resolution for industrial and commercial alarm codes (`E01`–`E10`).
-- **Interactive AI Copilot**: Context-aware slide-out chat drawer that dynamically injects active equipment context, error codes, and step indices into technician conversations.
-- **Technical Knowledge Retrieval**: Grounded documentation references linking diagnostic steps directly to manufacturer manual sections and excerpt quotations.
-- **Step-by-Step Diagnostic Guidance**: Sequential repair checklists with explicit tool requirements and safety instructions.
-- **Service Report Generation**: Automated AI compilation of completed checklist steps, telemetry snapshots, parts replaced, and technician notes.
-- **Technician Workspace**: Web and mobile interface for managing assigned dispatch jobs and progressing through the 6-step guided diagnostic flow.
-- **Supervisor Dashboard**: Central management portal for reviewing submitted field tickets, verifying telemetry readings, and recording supervisor sign-offs.
-- **Job & Report Management**: In-memory REST API data layer for creating, filtering, updating, and exporting service tickets.
-- **Diagnostic Benchmark Test Suite**: Built-in automated test runner that verifies all 10 HVAC error codes against the diagnostic pipeline with real-time pass/fail validation.
-- **Offline / Local Data Support**: Deterministic fallback engine that serves verified procedures and safety warnings without requiring an active cloud connection.
-- **Camera Scanning & Voice Input**: Mobile interfaces in the Android app for capturing equipment photos and speaking natural language queries.
+> **Most AI tools give you an answer. FieldMind is designed to help a field worker complete a job.**
 
----
+```
+   ┌────────────────────────────────────────────────────────┐
+   │                     FIELDMIND AI                       │
+   │                                                        │
+   │   AI Assistance          Technical Knowledge           │
+   │         +                         +                    │
+   │   Field Workflow         Step-by-Step Guidance         │
+   │                           +                            │
+   │                 Service Documentation                  │
+   └────────────────────────────────────────────────────────┘
+```
 
-## 6. Why FieldMind Is Different
-
-> Most AI tools give you an answer. FieldMind is designed to help a field worker complete a job.
-
-FieldMind connects the entire field repair lifecycle rather than stopping at a conversational text response:
-
-$$\begin{matrix} \textbf{AI Assistance} \\ + \\ \textbf{Technical Knowledge} \\ + \\ \textbf{Field Workflow} \\ + \\ \textbf{Step-by-Step Guidance} \\ + \\ \textbf{Service Documentation} \end{matrix}$$
-
-Instead of giving a technician a block of generic advice, FieldMind keeps the technician organized, grounded in OEM data, safe from equipment hazards, and documented for billing and compliance.
+- **Workflow-Driven**: Connects initial fault capture to final signed ticket without switching apps.
+- **Safety-First**: Halts recommendations with safety holds when equipment data is ambiguous.
+- **Grounded in OEM Data**: Every diagnostic step cites specific manual sections and required tooling.
+- **Human-in-the-Loop**: The certified technician verifies all telemetry and retains physical authority.
 
 ---
 
-## 7. Who Is It For?
+## Built for the Field
 
-### Current Use Case: Commercial & Residential HVAC
-HVAC is the starting demonstration use case. FieldMind models commercial rooftop units (RTUs), modular chillers, central air handling units (AHUs), VRF heat recovery systems, and VAV terminal boxes to illustrate complex diagnostic workflows, thermal calculations, and electrical checks.
-
-### Future Expansion: Broader Field-Service Industries
-The underlying diagnostic and reporting workflow extends directly to any equipment-centric field service domain:
-- **Electrical & Power Distribution**: Switchgear, transformers, MCC panels, and motor starters.
-- **Industrial Maintenance & Automation**: PLC cabinets, hydraulic pumps, pneumatic lines, and conveyor drives.
-- **Commercial Machinery & Refrigeration**: Supermarket rack systems, walk-in coolers, and industrial compressors.
-- **Automotive & Heavy Equipment**: Fleet diesel diagnostics, agricultural machinery, and hydraulic excavators.
-- **Manufacturing Plant Operations**: CNC machines, robotic cells, injection molding systems, and air compressors.
-
----
-
-## 8. Offline-First / Field-Ready Design
-
-Field work does not always happen with a reliable internet connection. Technicians frequently work in basements, reinforced mechanical rooms, remote substations, and rooftop enclosures where cellular connectivity is intermittent or unavailable.
+Field work frequently occurs in basements, mechanical rooms, remote substations, and rooftops with poor or nonexistent cellular connectivity.
 
 ```
 ONLINE MODE:
-Problem → Gemini Cloud AI Reasoning → Dynamic Guidance → Report Generation
+Problem ──▶ Gemini 3.7 Flash Cloud Reasoning ──▶ Dynamic Guidance ──▶ AI Report
 
 LIMITED CONNECTIVITY MODE:
-Problem → Deterministic Local Knowledge → Safety Hold Verification → Local Session State → Resume / Sync
+Problem ──▶ Local Knowledge Fallback ──▶ Safety Guardrails ──▶ In-Session State
 ```
 
-### What Is Currently Implemented:
-- **Deterministic Local Fallback**: When running without an internet connection or without a Gemini API key, the server uses a built-in technical knowledge base to provide verified baseline procedures, tool requirements, and safety warnings.
-- **Zero-Assumption Safety Holds**: If offline input lacks sufficient equipment data, FieldMind refuses to guess and directs the worker to verify physical nameplates and schematics.
-- **Session State Persistence**: All job updates, checklists, and generated reports persist in memory during the active session, allowing uninterrupted navigation across technician and supervisor views.
+- **Deterministic Local Fallback**: If internet connectivity or Gemini API access is unavailable, FieldMind serves verified baseline procedures, tool requirements, and safety warnings from local knowledge.
+- **Zero-Assumption Safety Holds**: When disconnected and inputs lack sufficient model data, FieldMind refuses to guess and directs technicians to verify physical nameplates.
+- **In-Session State Retention**: Active job checklists, recorded measurements, and draft reports stay preserved locally during field sessions.
 
-*(Note: Live generative AI reasoning with Gemini requires an active internet connection).*
-
----
-
-## 9. Application Workflow
-
-A field technician uses FieldMind through a straightforward 10-step workflow:
-
-1. **Open FieldMind**: Launch the web dashboard or Android mobile app.
-2. **Select Assigned Job**: Choose an active ticket from the dispatch queue or start a new diagnostic session.
-3. **Capture Equipment Data**: Select the equipment model or take a photo of the unit nameplate/component.
-4. **Enter Error or Problem**: Select or scan the alarm code (e.g., `E04`) or enter observed symptoms.
-5. **Run AI Diagnosis**: Generate structured root-cause analysis, confidence score, and OSHA safety warnings.
-6. **Review Technical Guidance**: Check required tools and read citations from the OEM manual.
-7. **Consult AI Copilot**: Ask follow-up questions in the slide-out chat drawer with automatic equipment context.
-8. **Complete & Verify Steps**: Check off sequential repair tasks and record live telemetry readings.
-9. **Generate Service Report**: Click to synthesize all diagnostic findings, replaced parts, and notes into a formal report.
-10. **Review in Supervisor Portal**: Dispatchers and supervisors review the submitted report and sign off on completion.
+*(Note: Live generative AI reasoning via Gemini requires an active network connection).*
 
 ---
 
-## 10. Android Application
+## Key Features
 
-The `/android` directory contains a native Android application built with modern Kotlin and Jetpack Compose:
-
-- **Home Screen (`HomeScreen.kt`)**: Displays active service jobs, urgent alerts, equipment quick-selectors, and quick diagnostic actions.
-- **Diagnosis Screen (`DiagnosisScreen.kt`)**: Implements the step-by-step diagnostic flow with root cause cards, confidence badges, and guided checklists.
-- **Scan Screen (`ScanScreen.kt`)**: Utilizes CameraX for photographing equipment nameplates, error displays, and damaged components.
-- **Voice Assistant Screen (`VoiceAssistantScreen.kt`)**: Enables hands-free voice interaction for technicians wearing work gloves.
-- **AI Copilot Drawer (`AiAssistantRepository.kt`)**: Connects to the diagnostic backend for contextual technical assistance.
-- **Reports Screen**: Displays past service records and job completion summaries.
-- **Settings Screen (`SettingsScreen.kt`)**: Configures API endpoints and offline fallback preferences.
-
----
-
-## 11. Web Dashboard
-
-The web application provides a responsive workspace for field technicians and back-office supervisors:
-
-- **Technician Workspace (`TechnicianDashboard.tsx`)**:
-  - Filterable dispatch job list (`All`, `Pending`, `In Progress`, `Completed`).
-  - Emergency priority badges (`Critical`, `High`, `Medium`, `Low`).
-  - Automated 10-case diagnostic benchmark runner.
-- **6-Step Guided Diagnosis Flow (`DiagnosisFlow.tsx`)**:
-  - Optical inspection with sample failure presets.
-  - Alphanumeric alarm code selector with safety guardrails.
-  - Root cause breakdown with OEM manual excerpts.
-  - Interactive repair checklist and telemetry recorder.
-- **Supervisor Portal (`SupervisorDashboard.tsx`)**:
-  - Fleet-wide dispatch queue and technician assignment view.
-  - Comprehensive service report inspector with full telemetry logs.
-  - Supervisor sign-off toggle and one-click demo data reset.
-- **Service Report Modal (`ServiceReportModal.tsx`)**:
-  - Clean commercial service report layout with print/PDF styling.
+| Feature | Description |
+| :--- | :--- |
+| **AI Equipment Diagnosis** | Generates root causes, confidence scores, and safety alerts using Gemini 3.7 Flash in JSON Schema mode. |
+| **Multimodal Inspection** | Inspects photos of components, nameplates, or wiring alongside preset failure samples (e.g., coil frost, burnt terminals). |
+| **Fault Code Matrix** | Rapid resolution of industrial and commercial alarm codes (`E01`–`E10`) with zero-hallucination guardrails. |
+| **AI Copilot Drawer** | Slide-out technician assistant with automatic injection of active equipment context, error codes, and step indices. |
+| **Step-by-Step Guidance** | Structured repair checklists specifying exact tools, safety precautions, and OEM manual citations. |
+| **Auto Report Generation** | Automatically synthesizes completed repair steps, telemetry logs, parts replaced, and notes into formal tickets. |
+| **Technician Workspace** | Mobile-ready dispatch interface for managing assigned tickets and running 6-step guided diagnostic flows. |
+| **Supervisor Portal** | Central hub for fleet managers to review field tickets, verify recorded telemetry, and record sign-offs. |
+| **Benchmark Test Runner** | Built-in automated suite testing 10 simulated HVAC error scenarios against the diagnostic engine with live results. |
 
 ---
 
-## 12. AI Architecture
+## Applications & Platforms
 
-FieldMind uses a structured, safety-first AI pipeline:
+### 1. Android Application (`/android`)
+Native mobile app built in Kotlin and Jetpack Compose for rugged one-handed field use:
+- **Home Screen (`HomeScreen.kt`)**: Active job cards, priority indicators, and quick-launch diagnostics.
+- **Diagnosis Screen (`DiagnosisScreen.kt`)**: Step-by-step diagnostic workflow with live confidence scores.
+- **Camera Scan (`ScanScreen.kt`)**: CameraX integration for photographing nameplates and damaged components.
+- **Voice Assistant (`VoiceAssistantScreen.kt`)**: Hands-free speech interface for technicians wearing gloves.
+- **Copilot & Reports**: Contextual troubleshooting drawer and past service history logs.
+
+### 2. Web Application (`/src`)
+Full-featured responsive web portal for technicians and back-office dispatchers:
+- **Technician Workspace**: Dispatch queue, 6-step guided diagnosis modal, and live AI Copilot drawer.
+- **Supervisor Dashboard**: Fleet-wide ticket monitoring, telemetry log auditing, and supervisor sign-offs.
+- **Printable Service Reports**: Formal commercial report modal with print and PDF export styling.
+
+---
+
+## AI & Knowledge Architecture
 
 ```
-Technician Input (Photo + Model + Alarm Code + Notes)
-                      ↓
-           FieldMind Express Backend
-                      ↓
-  Grounding Context (OEM Manuals & Fault Tables)
-                      ↓
-   Google Gemini 3.7 Flash (@google/genai SDK)
-                      ↓
-   JSON Schema Mode (Strict Structured Output)
-                      ↓
-Validated Diagnostic Object (Root Cause, Steps, Tools, Safety Warnings)
+ Technician Input (Photo + Model + Alarm Code + Notes)
+                         │
+                         ▼
+             FieldMind Express Backend
+                         │
+                         ▼
+        Grounding Context (OEM Fault Matrices)
+                         │
+                         ▼
+      Google Gemini 3.7 Flash (@google/genai SDK)
+                         │
+                         ▼
+     Structured Outputs via JSON Schema Mode
+                         │
+                         ▼
+ Validated Diagnostic Object (Causes, Steps, Tools, Safety Warnings)
 ```
 
 - **Model**: `gemini-3.7-flash` via the official `@google/genai` TypeScript SDK.
-- **JSON Schema Enforcement**: Guarantees that AI outputs match strict TypeScript interfaces (`DiagnosticResult`, `ServiceReport`).
-- **Insufficient Information Guardrails**: Triggers a safety hold when provided information is ambiguous or unverified, preventing hallucinations on dangerous physical equipment.
+- **Strict Schema Enforcement**: Guarantees typed outputs matching `DiagnosticResult` and `ServiceReport` interfaces.
+- **Grounding Data**: Curated technical specifications for commercial equipment (*TitanAir RTU-10X*, *AquaPulse Chiller 300*, *AeroVent AHU-05*, *Vortex VRF*, *ZoneMaster VAV*).
 
 ---
 
-## 13. Knowledge Base
+## Tech Stack
 
-FieldMind grounds its AI reasoning with curated technical data:
-
-- **Simulated OEM Equipment Profiles**: Detailed specifications, cooling capacities, refrigerant types, electrical ratings, and maintenance schedules for commercial equipment (e.g., *TitanAir RTU-10X*, *AquaPulse Chiller 300*, *AeroVent AHU-05*, *Vortex VRF-HeatRecovery*, *ZoneMaster VAV-Box*).
-- **Error Code Registry (`E01`–`E10`)**: Standardized fault code matrices covering high-pressure cutouts, low superheat, sensor faults, compressor thermal overloads, inverter DC link errors, and flame failures.
-- **Manual Citations & Required Tools**: Exact section references (e.g., Section 4.2.1, Section 8.3) and specific tool requirements (e.g., 500V Megohmmeter, Dual-Port Digital Manometer).
-- **Sample Inspection Presets**: Visual inspection samples covering common physical failure modes.
-
----
-
-## 14. Technology Stack
-
-### Android
-- **Language**: Kotlin
-- **UI Toolkit**: Jetpack Compose
-- **Camera**: CameraX API
-- **Architecture**: MVVM with Repository Pattern
-- **Target Platform**: Android SDK 26+
-
-### Web Frontend
-- **Framework**: React 19 (`react`, `react-dom`)
-- **Language**: TypeScript (~5.8)
-- **Styling**: Tailwind CSS v4 (`@tailwindcss/vite`)
-- **Animations**: Motion (`motion/react`)
-- **Icons**: Lucide React (`lucide-react`)
-- **Build Tool**: Vite 6
-
-### Backend & Server
-- **Runtime**: Node.js (TypeScript)
-- **Framework**: Express 4.21
-- **Dev Runner**: `tsx`
-- **Production Bundler**: `esbuild` (standalone `dist/server.cjs`)
-- **Configuration**: `dotenv`
-
-### AI & Reasoning
-- **SDK**: Google GenAI SDK (`@google/genai` v2.4.0)
-- **Model**: `gemini-3.7-flash`
-- **Output Mode**: Structured Outputs via JSON Schema
-
-### Data Layer
-- **Knowledge Base**: Curated OEM fault matrices and technical specifications (`src/data/knowledgeBase.ts`)
-- **State Store**: In-memory job queue and service report store with RESTful CRUD endpoints (`src/data/sampleJobs.ts`)
-
-### Build & Deployment
-- **Architecture**: Single-container Cloud Run deployment serving both backend API routes and static frontend assets on port 3000.
+| Layer | Technologies |
+| :--- | :--- |
+| **Mobile (Android)** | Kotlin, Jetpack Compose, CameraX, Android SDK 26+ |
+| **Web Frontend** | React 19, TypeScript (~5.8), Tailwind CSS v4, Motion (`motion/react`), Lucide React, Vite 6 |
+| **Backend / API** | Node.js, Express 4.21, TypeScript, `tsx` (dev), `esbuild` (production CJS bundle) |
+| **AI & LLM** | Google GenAI SDK (`@google/genai` v2.4.0), Gemini 3.7 Flash (JSON Schema mode) |
+| **Data & Storage** | Simulated OEM Knowledge Base, RESTful In-Memory Job & Report Store |
+| **Deployment** | Single-container Cloud Run architecture (port 3000 hosting Express API + static SPA) |
 
 ---
 
-## 15. API
+## API Reference
 
-The Express server exposes the following verified REST API endpoints:
+The backend exposes the following verified REST API endpoints:
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
 | `GET` | `/api/health` | Service health status and Gemini API connectivity check |
 | `GET` | `/api/equipment` | Retrieve simulated equipment profiles |
 | `GET` | `/api/error-codes` | Retrieve simulated error code registry (`E01`–`E10`) |
-| `GET` | `/api/sample-photos` | Retrieve preset optical inspection samples |
-| `GET` | `/api/jobs` | List all active and completed dispatch jobs |
+| `GET` | `/api/sample-photos` | Retrieve preset visual inspection samples |
+| `GET` | `/api/jobs` | List active and completed dispatch jobs |
 | `POST` | `/api/jobs` | Create a new dispatch job |
 | `PUT` | `/api/jobs/:id` | Update an existing job's status or details |
 | `GET` | `/api/reports` | List all submitted service reports |
-| `POST` | `/api/reports` | Save and store a new service report |
-| `POST` | `/api/diagnose` | Execute the structured AI diagnostic reasoning pipeline |
+| `POST` | `/api/reports` | Save a new service report |
+| `POST` | `/api/diagnose` | Run AI diagnostic reasoning pipeline |
 | `POST` | `/api/chat` | Interactive AI copilot chat with equipment context |
 | `POST` | `/api/generate-report` | AI service report generator from completed steps |
-| `GET` | `/api/test-diagnostic-pipeline` | Run automated 10-case benchmark test suite |
-| `POST` | `/api/reset-demo` | Reset jobs and reports store to initial demo state |
+| `GET` | `/api/test-diagnostic-pipeline` | Execute 10-case automated benchmark test suite |
+| `POST` | `/api/reset-demo` | Reset jobs and reports store to initial baseline |
 
 ---
 
-## 16. Project Structure
-
-```
-FieldMind-AI/
-├── .env.example              # Environment variable template
-├── .gitignore                # Git ignore configuration
-├── index.html                # HTML entry point
-├── metadata.json             # Applet metadata and capabilities
-├── package.json              # Web & server dependencies and scripts
-├── tsconfig.json             # TypeScript configuration
-├── vite.config.ts            # Vite bundler configuration
-├── server.ts                 # Express API server and static asset serving
-├── android/                  # Native Android application
-│   ├── app/                  # Android application module (Kotlin / Compose)
-│   │   └── src/main/java/    # Android source code & screens
-│   ├── build.gradle.kts      # Android Gradle build script
-│   └── settings.gradle.kts   # Android Gradle settings
-├── server/
-│   └── geminiService.ts      # Gemini AI diagnostic engine & test suite
-└── src/
-    ├── main.tsx              # React application entry point
-    ├── App.tsx               # Main routing and modal state coordinator
-    ├── types.ts              # TypeScript interfaces and data models
-    ├── index.css             # Tailwind CSS global styles
-    ├── data/
-    │   ├── knowledgeBase.ts  # OEM equipment data and error code registry
-    │   └── sampleJobs.ts     # Dispatch jobs and initial service reports
-    └── components/
-        ├── LandingPage.tsx          # Product overview and demo launcher
-        ├── TechnicianDashboard.tsx  # Technician job queue and benchmark runner
-        ├── DiagnosisFlow.tsx        # 6-step guided diagnostic procedure
-        ├── AiChatDrawer.tsx         # Slide-out interactive AI copilot
-        ├── SupervisorDashboard.tsx  # Supervisor review queue and approvals
-        ├── ServiceReportModal.tsx   # Printable service ticket modal
-        └── Navbar.tsx               # Top navigation bar
-```
-
----
-
-## 17. Getting Started
+## Getting Started
 
 ### Prerequisites
-- **Node.js**: v18.0.0 or higher (v20+ recommended)
+- **Node.js**: v18.0.0+ (v20+ recommended)
 - **npm** or **bun**
 - **Google Gemini API Key**: From [Google AI Studio](https://aistudio.google.com/) *(optional for local fallback mode, required for live AI reasoning)*
 
-### Clone Repository
+### 1. Clone & Install
 ```bash
 git clone https://github.com/atharvanavgire10/FieldMind-AI.git
 cd FieldMind-AI
-```
-
-### Install Dependencies
-```bash
 npm install
 ```
 
-### Configure Environment Variables
-Create a `.env` file in the root directory:
+### 2. Configure Environment
 ```bash
 cp .env.example .env
 ```
-Add your Gemini API key:
+Edit `.env`:
 ```env
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
+> *Never commit `.env` or secret keys to version control.*
 
-> **Security Note**: Never commit your `.env` file or real API keys to version control. The `.env` file is excluded in `.gitignore`.
-
-### Run Development Server
+### 3. Run Development Server
 ```bash
 npm run dev
 ```
-The application will start at `http://localhost:3000`.
+Open **http://localhost:3000** in your browser.
 
-### Android Setup (Optional)
-Open the `/android` directory in **Android Studio** (Hedgehog or newer), sync Gradle dependencies, and run on an Android device or emulator running SDK 26+.
-
----
-
-## 18. Environment Variables
-
-Create `.env` using `.env.example`:
-
-```env
-# Required for live server-side Gemini AI features
-GEMINI_API_KEY=your_gemini_api_key_here
-```
-
-- For Android development, environment settings can be placed in `android/.env.example` as needed.
-- **Never commit your `.env` file or API keys to GitHub.**
-
----
-
-## 19. Production Build / Deployment
-
-FieldMind is structured for single-command production compilation:
-
+### 4. Production Build
 ```bash
-# Compile frontend assets and bundle the backend server with esbuild
 npm run build
-
-# Launch production server
 npm start
 ```
 
-The production build generates static web assets in `dist/` and a standalone CommonJS backend bundle at `dist/server.cjs`.
+---
+
+## Demo Walkthrough
+
+Experience the full technician flow in 2 minutes:
+
+1. Open **http://localhost:3000** and click **"Launch Demo Flow"**.
+2. Select sample photo *Compressor Overload Terminal*, choose unit **TitanAir RTU-10X**, and pick Alarm **E04 (Compressor High Thermal Trip)**.
+3. Click **"Run AI Diagnostic Reasoning"** to view the root-cause analysis, confidence rating, and OSHA LOTO alerts.
+4. Review the cited OEM manual section and required tools (True-RMS Multimeter, Manifold Gauges).
+5. Open the **AI Copilot Drawer** and ask a follow-up question (e.g., *"What is the correct winding resistance?"*).
+6. Check off the repair steps and record live telemetry readings.
+7. Click **"Generate AI Service Report"** to create the finalized service ticket.
+8. Switch to the **Supervisor Dashboard** to review and sign off.
 
 ---
 
-## 20. Demo
-
-Experience the full technician workflow:
-
-1. **Open FieldMind** at `http://localhost:3000` and click **"Launch Demo Flow"**.
-2. **Select Equipment**: Choose sample photo *Compressor Overload Terminal*, select unit **TitanAir RTU-10X**, and pick Alarm **E04 (Compressor High Thermal Trip)**.
-3. **Run Diagnosis**: Click **"Run AI Diagnostic Reasoning"** to review root cause analysis and OSHA warnings.
-4. **Review Guidance**: Check the required tools and cited OEM manual sections.
-5. **Ask AI Copilot**: Open the chat drawer and ask for specific multimeter test points.
-6. **Verify Steps & Telemetry**: Check off the guided repair steps and verify operating readings.
-7. **Generate Report**: Create the final service ticket and submit it.
-8. **Supervisor Approval**: Switch to the Supervisor Dashboard to review and sign off.
-
----
-
-## 21. Safety and Limitations
-
-- **Assistive Tool Only**: FieldMind AI provides operational assistance and does not replace certified professional training.
-- **Physical Safety Hazards**: Working on physical equipment involves high-voltage electricity, pressurized refrigerants, rotating machinery, and combustible gases. Technicians must always observe OSHA 1910.147 Lock-Out / Tag-Out (LOTO) procedures.
-- **Manufacturer Documentation Precedence**: AI recommendations must never override official manufacturer service manuals or engineering bulletins.
-- **Image & Sensor Limits**: Optical analysis can be influenced by lighting conditions, camera angles, or obscured nameplates.
-- **Connectivity Requirements**: Real-time generative reasoning requires an active connection to the Gemini API. Offline mode uses preloaded rule-based data and safety holds.
-
----
-
-## 22. Current Status
+## Current Status
 
 ### Implemented (MVP)
-- [x] Full-stack web application (React 19, TypeScript, Tailwind CSS v4).
-- [x] Express backend with Gemini 3.7 Flash diagnostic pipeline.
-- [x] 6-step guided diagnostic flow from photo capture to report.
-- [x] Simulated OEM knowledge base with 5 commercial equipment profiles and 10 alarm codes.
-- [x] Contextual slide-out AI copilot drawer.
+- [x] Full-stack web application (React 19 + TypeScript + Tailwind CSS v4).
+- [x] Express backend with Gemini 3.7 Flash structured diagnostic pipeline.
+- [x] 6-step guided diagnostic flow from photo capture to final report.
+- [x] Simulated OEM knowledge base with 5 commercial HVAC models and 10 alarm codes.
+- [x] Slide-out contextual AI copilot drawer.
 - [x] Automated AI service report generation with print/PDF styling.
-- [x] Supervisor dispatch hub with report inspection and sign-off.
+- [x] Supervisor dashboard with report inspection and sign-off.
 - [x] Automated 10-case diagnostic benchmark test suite (`/api/test-diagnostic-pipeline`).
 - [x] Deterministic local fallback and Insufficient Information safety guardrails.
 - [x] Native Android mobile architecture in `/android` (Kotlin, Jetpack Compose, CameraX).
 
 ### Planned
-- [ ] On-device Small Language Models (SLMs) for local inference directly on mobile hardware.
+- [ ] On-device Small Language Models (SLMs) for full offline inference.
 - [ ] Dynamic RAG pipeline ingesting real-world OEM PDF manuals via vector search.
-- [ ] Bluetooth / BLE telemetry ingestion from digital gauges, clamp meters, and thermal cameras.
-- [ ] Voice-to-text / speech interface for hands-free operation in noisy field environments.
-- [ ] Bi-directional sync between Android mobile local storage and cloud database.
+- [ ] Direct Bluetooth (BLE) telemetry streaming from digital gauges and thermal cameras.
+- [ ] Live bi-directional cloud sync between Android local storage and central database.
 
 ---
 
-## 23. Roadmap
+## Safety & Limitations
 
-- **Phase 1 (Current MVP)**: Full-stack diagnostic pipeline, guided repair workflow, supervisor portal, simulated OEM knowledge base, and automated report generation.
-- **Phase 2 (Advanced AI & Retrieval)**: Dynamic multi-document RAG with PDF manual parsing, vector search, and hands-free voice interaction.
-- **Phase 3 (Physical Integration)**: Direct BLE connectivity with digital field tools (multimeters, pressure gauges) and IoT building automation systems (BAS).
-- **Phase 4 (Enterprise Integration)**: Field-service management system integrations (ServiceTitan, ProCore, SAP FSM) and augmented reality (AR) schematic overlays.
+- **Professional Review**: FieldMind AI provides operational assistance; recommendations must be reviewed and verified by qualified, certified technicians before performing physical actions.
+- **Physical Hazards**: High-voltage electrical systems, pressurized refrigerants, rotating machinery, and gas lines present severe hazards. Technicians must always adhere to OSHA 1910.147 Lock-Out / Tag-Out (LOTO) protocols.
+- **Authoritative Precedence**: AI output does not replace official manufacturer manuals or local building codes.
+- **Connectivity**: Live generative reasoning requires an active connection to the Gemini API. Offline mode uses preloaded rule-based data and safety holds.
 
 ---
 
-## 24. Vision
+## Vision
 
-> Start with HVAC. Build for every field worker.
+### Start with HVAC. Build for every field worker.
 
-FieldMind aims to bring accessible technical intelligence to everyone who works with physical equipment, wherever the job takes them.
+```
+       HVAC & Refrigeration
+               │
+               ▼
+   Electrical & Power Systems
+               │
+               ▼
+ Industrial Maintenance & Robotics
+               │
+               ▼
+  Automotive & Heavy Equipment
+               │
+               ▼
+    Manufacturing Plant Ops
+```
 
-**AI expertise in the field — wherever the work takes you.**
+> **AI expertise in the field — wherever the work takes you.**
 
 ---
 
