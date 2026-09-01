@@ -2,9 +2,6 @@
 
 > **AI help for people who fix things.**
 
-<div align="center">
-  <img src="docs/screenshots/hero.jpg" alt="FieldMind AI Technician Copilot" width="800px" style="border-radius: 12px; margin: 16px 0;" />
-</div>
 
 FieldMind AI is an on-site AI copilot for field workers who diagnose, repair, maintain, and service physical equipment.
 
