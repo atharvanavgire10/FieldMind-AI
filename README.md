@@ -2,6 +2,10 @@
 
 > **AI help for people who fix things.**
 
+<div align="center">
+  <img src="docs/screenshots/hero.jpg" alt="FieldMind AI Technician Copilot" width="800px" style="border-radius: 12px; margin: 16px 0;" />
+</div>
+
 FieldMind AI is an on-site AI copilot for field workers who diagnose, repair, maintain, and service physical equipment.
 
 ```
@@ -295,7 +299,7 @@ npm start
 
 Experience the full technician flow in 2 minutes:
 
-1. Open **https://fieldmind-p663zox4b-atharvas-projects-d1719307.vercel.app/** and click **"Launch Demo Flow"**.
+1. Open **http://localhost:3000** and click **"Launch Demo Flow"**.
 2. Select sample photo *Compressor Overload Terminal*, choose unit **TitanAir RTU-10X**, and pick Alarm **E04 (Compressor High Thermal Trip)**.
 3. Click **"Run AI Diagnostic Reasoning"** to view the root-cause analysis, confidence rating, and OSHA LOTO alerts.
 4. Review the cited OEM manual section and required tools (True-RMS Multimeter, Manifold Gauges).
